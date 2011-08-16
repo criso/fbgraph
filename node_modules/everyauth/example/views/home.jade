@@ -1,0 +1,108 @@
+- if (!everyauth.loggedIn)
+  h2 Not Authenticated
+  #register
+    a(href='/register') Register
+  #password-login
+    a(href='/login', style='border: 0px') Login with Password
+  #fb-login.fb_button(style='background-position: left -188px')
+    a.fb_button_medium(href='/auth/facebook')
+      span#fb_login_text.fb_button_text
+        Connect with Facebook
+  #twitter-login
+    a(href='/auth/twitter', style='border: 0px')
+      img(style='border: 0px', src='https://si0.twimg.com/images/dev/buttons/sign-in-with-twitter-l.png')
+  #github-login
+    a(href='/auth/github', style='border: 0px')
+      img(style='border: 0px', src='http://github.com/intridea/authbuttons/raw/master/png/github_64.png')
+  #instagram-login
+    a(href='/auth/instagram', style='border: 0px')
+      img(style='border: 0px', src='https://instagram.com/static/images/headerWithTitle.png')
+  #foursquare-login
+    a(href='/auth/foursquare', style='border: 0px')
+      img(style='border: 0px', src='https://foursquare.com/img/headerLogo.png')
+  #linkedin-login
+    a(href='/auth/linkedin', style='border: 0px')
+      img(style='border: 0px', src='http://press.linkedin.com/sites/all/themes/presslinkedin/images/LinkedIn_WebLogo_LowResExample.jpg')
+  #google-login
+    a(href='/auth/google', style='border: 0px')
+      img(style='border: 0px', src='https://www.google.com/favicon.ico')
+  #yahoo-login
+    a(href='/auth/yahoo', style='border: 0px')
+      img(style='border: 0px', src='http://l.yimg.com/a/i/reg/openid/buttons/1_new.png')
+  #googlehybrid-login
+    a(href='/auth/googlehybrid', style='border: 0px')
+      img(style='border: 0px', src='https://www.google.com/favicon.ico')
+      | Hybrid
+  #readability-login
+    a(href='/auth/readability', style='border: 0px')
+      img(style='border: 0px', src='https://www.readability.com/media/images/logo_chair.png')
+  #dropbox-login
+    a(href='/auth/dropbox', style='border: 0px')
+      img(src='https://www.dropbox.com/static/16890/images/logo.png')
+  #vimeo-login
+    a(href='/auth/vimeo', style='border: 0px')
+      img(src='http://a.vimeocdn.com/images/logo_vimeo.png')
+  #justintv-login
+    a(href='/auth/justintv', style='border: 0px')
+      img(src='http://s.jtvnw.net/jtv_user_pictures/hosted_images/new_logo_148_40_black.png')
+  #tumblr-login
+    a(href='/auth/tumblr', style='border: 0px')
+      img(src='http://assets.tumblr.com/images/logo.png?alpha&6')
+  #box-login
+    a(href='/auth/box', style='border: 0px')
+      img(src='http://sites.box.net/apps/web/simpleshare/img/logo.png')
+  #openid-login
+    form#openid(action='/auth/openid')
+      label(for='openid_identifier') OpenID Identifier: &nbsp;
+      input(type='text', name='openid_identifier')
+      input(type='submit') Login
+- else
+  h2 Authenticated
+  - if (everyauth.facebook)
+    h3 Facebook User Data
+    p= JSON.stringify(everyauth.facebook.user)
+  - if (everyauth.twitter)
+    h3 Twitter User Data
+    p= JSON.stringify(everyauth.twitter.user)
+  - if (everyauth.github)
+    h3 GitHub User Data
+    p= JSON.stringify(everyauth.github.user)
+  - if (everyauth.instagram)
+    h3 Instagram User Data
+    p= JSON.stringify(everyauth.instagram.user)
+  - if (everyauth.foursquare)
+    h3 Foursquare User Data
+    p= JSON.stringify(everyauth.foursquare.user)
+  - if (everyauth.linkedin)
+    h3 LinkedIn User Data
+    p= JSON.stringify(everyauth.linkedin.user)
+  - if (everyauth.google)
+    h3 Google User Data
+    p= JSON.stringify(everyauth.google.user)
+  - if (everyauth.yahoo)
+    h3 Yahoo User Data
+    p= JSON.stringify(everyauth.yahoo.user)
+  - if (everyauth.readability)
+    h3 Readability User Data
+    p= JSON.stringify(everyauth.readability.user)
+  - if (everyauth.dropbox)
+    h3 Dropbox User Data
+    p= JSON.stringify(everyauth.dropbox.user)
+  - if (everyauth.vimeo)
+    h3 Vimeo User Data
+    p= JSON.stringify(everyauth.vimeo.user)
+  - if (everyauth.justintv)
+    h3 Justin.tv User Data
+    p= JSON.stringify(everyauth.justintv.user)  
+  - if (everyauth.tumblr)
+    h3 Tumblr User Data
+    p= JSON.stringify(everyauth.tumblr.user)  
+  - if (everyauth.box)
+    h3 Box.net User Data
+    p= JSON.stringify(everyauth.box.user)
+  - if (everyauth.openid)
+    h3 Openid User Data
+    p= JSON.stringify(everyauth.openid.user)
+
+  h3
+    a(href='/logout') Logout

@@ -1,0 +1,17 @@
+!!!
+html
+  head
+    title= title
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    div#fb-root
+    - if (!everyauth.loggedIn)
+      div#facebook_login
+        div#fb-login.fb_button(style='float:left; background-position: left -188px')                
+          a.fb_button_medium(href='/auth/facebook')
+            span#fb_login_text.fb_button_text Connect with Facebook
+
+  body!= body
+
+  script(src='/javascripts/facebook.js')

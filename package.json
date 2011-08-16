@@ -1,0 +1,11 @@
+{
+    "name": "application-name"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "express": "2.4.3"
+    , "jade": ">= 0.0.1"
+    , "everyauth":  ">= 0.2.17"
+	, "oauth": ">=0.9.3"
+  }
+}

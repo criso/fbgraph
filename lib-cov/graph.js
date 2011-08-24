@@ -3,187 +3,194 @@ if (typeof _$jscoverage === 'undefined') _$jscoverage = {};
 if (! _$jscoverage['graph.js']) {
   _$jscoverage['graph.js'] = [];
   _$jscoverage['graph.js'][5] = 0;
-  _$jscoverage['graph.js'][16] = 0;
-  _$jscoverage['graph.js'][23] = 0;
+  _$jscoverage['graph.js'][15] = 0;
+  _$jscoverage['graph.js'][21] = 0;
   _$jscoverage['graph.js'][28] = 0;
-  _$jscoverage['graph.js'][36] = 0;
   _$jscoverage['graph.js'][37] = 0;
+  _$jscoverage['graph.js'][38] = 0;
   _$jscoverage['graph.js'][40] = 0;
+  _$jscoverage['graph.js'][41] = 0;
+  _$jscoverage['graph.js'][42] = 0;
   _$jscoverage['graph.js'][43] = 0;
   _$jscoverage['graph.js'][44] = 0;
-  _$jscoverage['graph.js'][45] = 0;
   _$jscoverage['graph.js'][46] = 0;
-  _$jscoverage['graph.js'][48] = 0;
-  _$jscoverage['graph.js'][51] = 0;
-  _$jscoverage['graph.js'][58] = 0;
-  _$jscoverage['graph.js'][59] = 0;
-  _$jscoverage['graph.js'][66] = 0;
-  _$jscoverage['graph.js'][67] = 0;
-  _$jscoverage['graph.js'][70] = 0;
-  _$jscoverage['graph.js'][71] = 0;
-  _$jscoverage['graph.js'][72] = 0;
-  _$jscoverage['graph.js'][74] = 0;
-  _$jscoverage['graph.js'][81] = 0;
+  _$jscoverage['graph.js'][49] = 0;
+  _$jscoverage['graph.js'][55] = 0;
+  _$jscoverage['graph.js'][57] = 0;
+  _$jscoverage['graph.js'][60] = 0;
+  _$jscoverage['graph.js'][61] = 0;
+  _$jscoverage['graph.js'][62] = 0;
+  _$jscoverage['graph.js'][65] = 0;
+  _$jscoverage['graph.js'][76] = 0;
+  _$jscoverage['graph.js'][77] = 0;
+  _$jscoverage['graph.js'][84] = 0;
+  _$jscoverage['graph.js'][85] = 0;
+  _$jscoverage['graph.js'][88] = 0;
   _$jscoverage['graph.js'][89] = 0;
   _$jscoverage['graph.js'][90] = 0;
   _$jscoverage['graph.js'][92] = 0;
-  _$jscoverage['graph.js'][94] = 0;
-  _$jscoverage['graph.js'][95] = 0;
-  _$jscoverage['graph.js'][96] = 0;
-  _$jscoverage['graph.js'][103] = 0;
-  _$jscoverage['graph.js'][104] = 0;
-  _$jscoverage['graph.js'][105] = 0;
+  _$jscoverage['graph.js'][99] = 0;
+  _$jscoverage['graph.js'][107] = 0;
   _$jscoverage['graph.js'][108] = 0;
+  _$jscoverage['graph.js'][110] = 0;
   _$jscoverage['graph.js'][112] = 0;
   _$jscoverage['graph.js'][113] = 0;
+  _$jscoverage['graph.js'][116] = 0;
+  _$jscoverage['graph.js'][117] = 0;
   _$jscoverage['graph.js'][118] = 0;
   _$jscoverage['graph.js'][123] = 0;
-  _$jscoverage['graph.js'][135] = 0;
-  _$jscoverage['graph.js'][136] = 0;
-  _$jscoverage['graph.js'][137] = 0;
+  _$jscoverage['graph.js'][128] = 0;
+  _$jscoverage['graph.js'][141] = 0;
   _$jscoverage['graph.js'][142] = 0;
-  _$jscoverage['graph.js'][149] = 0;
-  _$jscoverage['graph.js'][150] = 0;
-  _$jscoverage['graph.js'][151] = 0;
-  _$jscoverage['graph.js'][152] = 0;
+  _$jscoverage['graph.js'][143] = 0;
+  _$jscoverage['graph.js'][148] = 0;
+  _$jscoverage['graph.js'][155] = 0;
   _$jscoverage['graph.js'][156] = 0;
   _$jscoverage['graph.js'][157] = 0;
   _$jscoverage['graph.js'][158] = 0;
-  _$jscoverage['graph.js'][161] = 0;
-  _$jscoverage['graph.js'][169] = 0;
+  _$jscoverage['graph.js'][165] = 0;
+  _$jscoverage['graph.js'][166] = 0;
+  _$jscoverage['graph.js'][167] = 0;
   _$jscoverage['graph.js'][170] = 0;
-  _$jscoverage['graph.js'][172] = 0;
   _$jscoverage['graph.js'][178] = 0;
+  _$jscoverage['graph.js'][179] = 0;
+  _$jscoverage['graph.js'][186] = 0;
+  _$jscoverage['graph.js'][187] = 0;
 }
 _$jscoverage['graph.js'][5]++;
 var https = require("https"), querystring = require("querystring"), util = require("util"), EventEmitter = require("events").EventEmitter, noop = (function () {
 });
-_$jscoverage['graph.js'][16]++;
+_$jscoverage['graph.js'][15]++;
+var accessToken = null;
+_$jscoverage['graph.js'][21]++;
 exports.version = "0.1.0";
-_$jscoverage['graph.js'][23]++;
-exports.graphUrl = "graph.facebook.com";
 _$jscoverage['graph.js'][28]++;
-exports.accessToken = null;
-_$jscoverage['graph.js'][36]++;
+exports.graphUrl = "graph.facebook.com";
+_$jscoverage['graph.js'][37]++;
 function Graph(method, url, fn) {
-  _$jscoverage['graph.js'][37]++;
+  _$jscoverage['graph.js'][38]++;
   EventEmitter.call(this);
   _$jscoverage['graph.js'][40]++;
-  if (! url.match(/^\//)) {
-    _$jscoverage['graph.js'][40]++;
-    url = "/" + url;
-  }
-  _$jscoverage['graph.js'][43]++;
+  url = this.cleanUrl(url);
+  _$jscoverage['graph.js'][41]++;
   this.callback = fn || noop;
-  _$jscoverage['graph.js'][44]++;
+  _$jscoverage['graph.js'][42]++;
   this.body = "";
-  _$jscoverage['graph.js'][45]++;
+  _$jscoverage['graph.js'][43]++;
   this.options = {host: exports.graphUrl, path: url};
-  _$jscoverage['graph.js'][46]++;
+  _$jscoverage['graph.js'][44]++;
   this[method.toLowerCase()]();
-  _$jscoverage['graph.js'][48]++;
+  _$jscoverage['graph.js'][46]++;
   return this;
 }
-_$jscoverage['graph.js'][51]++;
+_$jscoverage['graph.js'][49]++;
 util.inherits(Graph, EventEmitter);
-_$jscoverage['graph.js'][58]++;
+_$jscoverage['graph.js'][55]++;
+Graph.prototype.cleanUrl = (function (url) {
+  _$jscoverage['graph.js'][57]++;
+  if (! url.match(/^\//)) {
+    _$jscoverage['graph.js'][57]++;
+    url = "/" + url;
+  }
+  _$jscoverage['graph.js'][60]++;
+  if (accessToken) {
+    _$jscoverage['graph.js'][61]++;
+    url += url.indexOf("?") !== -1? "&": "?";
+    _$jscoverage['graph.js'][62]++;
+    url += querystring.stringify(accessToken);
+  }
+  _$jscoverage['graph.js'][65]++;
+  return url;
+});
+_$jscoverage['graph.js'][76]++;
 Graph.prototype.write = (function (data) {
-  _$jscoverage['graph.js'][59]++;
+  _$jscoverage['graph.js'][77]++;
   this.body += data;
 });
-_$jscoverage['graph.js'][66]++;
+_$jscoverage['graph.js'][84]++;
 Graph.prototype.end = (function (imageData) {
-  _$jscoverage['graph.js'][67]++;
+  _$jscoverage['graph.js'][85]++;
   var json = imageData || null, err = null;
-  _$jscoverage['graph.js'][70]++;
+  _$jscoverage['graph.js'][88]++;
   if (! json) {
-    _$jscoverage['graph.js'][71]++;
+    _$jscoverage['graph.js'][89]++;
     try {
-      _$jscoverage['graph.js'][72]++;
+      _$jscoverage['graph.js'][90]++;
       json = JSON.parse(this.body);
     }
     catch (e) {
-      _$jscoverage['graph.js'][74]++;
+      _$jscoverage['graph.js'][92]++;
       err = {error: "Error parsing json", excetpion: e};
     }
   }
-  _$jscoverage['graph.js'][81]++;
+  _$jscoverage['graph.js'][99]++;
   this.callback(err, json);
 });
-_$jscoverage['graph.js'][89]++;
+_$jscoverage['graph.js'][107]++;
 Graph.prototype.get = (function () {
-  _$jscoverage['graph.js'][90]++;
-  var self = this;
-  _$jscoverage['graph.js'][92]++;
-  https.get(this.options, (function (res) {
-  _$jscoverage['graph.js'][94]++;
-  res.on("data", (function (data) {
-  _$jscoverage['graph.js'][95]++;
-  if (! self.write(data)) {
-    _$jscoverage['graph.js'][96]++;
-    res.pause();
-  }
-}));
-  _$jscoverage['graph.js'][103]++;
-  self.on("drain", (function () {
-  _$jscoverage['graph.js'][104]++;
-  console.log("drain");
-  _$jscoverage['graph.js'][105]++;
-  res.resume();
-}));
   _$jscoverage['graph.js'][108]++;
-  res.on("end", (function () {
+  var self = this;
+  _$jscoverage['graph.js'][110]++;
+  https.get(this.options, (function (res) {
   _$jscoverage['graph.js'][112]++;
+  res.on("data", (function (data) {
+  _$jscoverage['graph.js'][113]++;
+  self.write(data);
+}));
+  _$jscoverage['graph.js'][116]++;
+  res.on("end", (function () {
+  _$jscoverage['graph.js'][117]++;
   if (res.headers["content-type"].indexOf("image") !== -1) {
-    _$jscoverage['graph.js'][113]++;
+    _$jscoverage['graph.js'][118]++;
     self.end({image: true, location: res.headers.location});
   }
   else {
-    _$jscoverage['graph.js'][118]++;
+    _$jscoverage['graph.js'][123]++;
     self.end();
   }
 }));
 })).on("error", (function (err) {
-  _$jscoverage['graph.js'][123]++;
+  _$jscoverage['graph.js'][128]++;
   self.callback({error: "Error processing https request", exception: err}, null);
 }));
 });
-_$jscoverage['graph.js'][135]++;
+_$jscoverage['graph.js'][141]++;
 exports.get = (function (url, fn) {
-  _$jscoverage['graph.js'][136]++;
+  _$jscoverage['graph.js'][142]++;
   if (typeof url !== "string") {
-    _$jscoverage['graph.js'][137]++;
+    _$jscoverage['graph.js'][143]++;
     return fn({error: "Graph api url must be a string"}, null);
   }
-  _$jscoverage['graph.js'][142]++;
+  _$jscoverage['graph.js'][148]++;
   return new Graph("GET", url, fn);
 });
-_$jscoverage['graph.js'][149]++;
+_$jscoverage['graph.js'][155]++;
 exports.search = (function (options, fn) {
-  _$jscoverage['graph.js'][150]++;
+  _$jscoverage['graph.js'][156]++;
   options = options || {};
-  _$jscoverage['graph.js'][151]++;
+  _$jscoverage['graph.js'][157]++;
   var url = "/search?" + querystring.stringify(options);
-  _$jscoverage['graph.js'][152]++;
+  _$jscoverage['graph.js'][158]++;
   return new Graph("GET", url, fn);
 });
-_$jscoverage['graph.js'][156]++;
+_$jscoverage['graph.js'][165]++;
 exports.authorizeUrl = (function (opts) {
-  _$jscoverage['graph.js'][157]++;
+  _$jscoverage['graph.js'][166]++;
   if (! opts) {
-    _$jscoverage['graph.js'][158]++;
+    _$jscoverage['graph.js'][167]++;
     throw new Error("AuthorizeUrl Must have a redirectUri");
   }
-  _$jscoverage['graph.js'][161]++;
+  _$jscoverage['graph.js'][170]++;
   return "https://www.facebook.com/dialog/oauth?" + querystring.stringify(opts);
 });
-_$jscoverage['graph.js'][169]++;
-exports.setAccessToken = (function (config, code, fn) {
-  _$jscoverage['graph.js'][170]++;
-  var callback = fn || exports.noop;
-  _$jscoverage['graph.js'][172]++;
-  var oAuth = new OAuth(config.appId, config.secret, "https://" + exports.graphUrl);
-  _$jscoverage['graph.js'][178]++;
-  oAuth.getOAuthAccessToken(code, {redirect_uri: config.callback}, callback);
+_$jscoverage['graph.js'][178]++;
+exports.setAccessToken = (function (token) {
+  _$jscoverage['graph.js'][179]++;
+  accessToken = {access_token: token};
 });
-_$jscoverage['graph.js'].source = ["/**"," * Module Dependencies"," */","","var https        = require('https')","  , querystring  = require('querystring')","  , util         = require('util')","  , EventEmitter = require('events').EventEmitter","  , noop         = function(){};","","","/**"," * Library version"," */","","exports.version = '0.1.0';","","","/**"," * Graph api url"," */","","exports.graphUrl = 'graph.facebook.com';","","/**"," *"," */","exports.accessToken = null;","","/**"," * Graph Stream"," *"," * @param {String} method"," * @param {String} url"," */","function Graph(method, url, fn) {","  EventEmitter.call(this);","","  // add leading slash","  if (!url.match(/^\\//)) { url = '/' + url; }","","","  this.callback = fn || noop;","  this.body    = '';","  this.options = { host: exports.graphUrl , path: url };","  this[method.toLowerCase()]();","","  return this;","}","","util.inherits(Graph, EventEmitter);","","/**"," *"," * @param {Mixed} data"," */","","Graph.prototype.write = function (data) {","  this.body += data;","};","","/**"," *"," */","","Graph.prototype.end = function (imageData) {","  var json = imageData || null","    , err  = null;","  ","  if (!json) {","    try {","      json = JSON.parse(this.body); ","    } catch (e) {","      err = {","        error: 'Error parsing json',","        excetpion: e","      }; ","    }","  }","","  this.callback(err, json);","};","","","/**"," *"," */","","Graph.prototype.get = function() {","  var self = this;","","  https.get(this.options, function(res) {","","    res.on('data', function (data) {","      if (!self.write(data)) {","        res.pause(); ","      } ","    });","","    // ----------------------","    // TODO: is this needed ","    // ----------------------","    self.on('drain', function () {","      console.log('drain');","      res.resume();","    });","","    res.on('end', function() {","      // urls for images are redirected to that location","      // so we'll return an object containing","      // the image info instead","      if (res.headers['content-type'].indexOf('image') !== -1 ) {","        self.end({","          image: true ,","          location: res.headers.location","        });","      } else {","        self.end();","      }","    });","","  }).on('error', function (err) {","    self.callback({","      error: 'Error processing https request',","      exception: err","    }, null);","  });","};","","","/**"," *"," */","","exports.get = function(url, fn) {","  if (typeof url !== 'string') {","    return fn({ ","            error: 'Graph api url must be a string' ","          }, null);","  }","  ","  return new Graph('GET', url, fn);","};","","/**"," *"," */","","exports.search = function (options, fn) {","  options = options || {};","  var url = '/search?' + querystring.stringify(options);","  return new Graph('GET', url, fn);","};","","","exports.authorizeUrl = function (opts) {","  if (!opts) {","    throw new Error('AuthorizeUrl Must have a redirectUri');","  }","","  return  'https://www.facebook.com/dialog/oauth?' ","            + querystring.stringify(opts);","};","","/**"," *"," */","","exports.setAccessToken = function(config, code, fn) {","  var callback = fn || exports.noop;","  ","  var oAuth = new OAuth(","      config.appId","    , config.secret","    , 'https://' + exports.graphUrl","  );","","  oAuth.getOAuthAccessToken(code, { ","    redirect_uri: config.callback ","  }, callback);","};"];
+_$jscoverage['graph.js'][186]++;
+exports.getAccessToken = (function () {
+  _$jscoverage['graph.js'][187]++;
+  return accessToken.access_token;
+});
+_$jscoverage['graph.js'].source = ["/**"," * Module Dependencies"," */","","var https        = require('https')","  , querystring  = require('querystring')","  , util         = require('util')","  , EventEmitter = require('events').EventEmitter","  , noop         = function(){};","","/**"," * @private"," */","","var accessToken = null;","","/**"," * Library version"," */","","exports.version = '0.1.0';","","","/**"," * Graph api url"," */","","exports.graphUrl = 'graph.facebook.com';","","","/**"," * Graph Stream"," *"," * @param {String} method"," * @param {String} url"," */","function Graph(method, url, fn) {","  EventEmitter.call(this);","","  url           = this.cleanUrl(url);","  this.callback = fn || noop;","  this.body     = '';","  this.options  = { host: exports.graphUrl , path: url };","  this[method.toLowerCase()]();","","  return this;","}","","util.inherits(Graph, EventEmitter);","","/**"," *"," */","","Graph.prototype.cleanUrl = function(url) {","  // add leading slash","  if (!url.match(/^\\//)) { url = '/' + url; }","","  // add access token to url","  if (accessToken) {","    url += url.indexOf('?') !== -1 ? '&amp;' : '?';","    url += querystring.stringify(accessToken);","  }","","  return url;","","};","","","","/**"," *"," * @param {Mixed} data"," */","","Graph.prototype.write = function (data) {","  this.body += data;","};","","/**"," * @param {object} imageData"," */","","Graph.prototype.end = function (imageData) {","  var json = imageData || null","    , err  = null;","","  if (!json) {","    try {","      json = JSON.parse(this.body); ","    } catch (e) {","      err = {","          error: 'Error parsing json'","        , excetpion: e","      }; ","    }","  }","","  this.callback(err, json);","};","","","/**"," *"," */","","Graph.prototype.get = function() {","  var self = this;","","  https.get(this.options, function(res) {","","    res.on('data', function (data) {","      self.write(data);","    });","","    res.on('end', function () {","      if (res.headers['content-type'].indexOf('image') !== -1 ) {","        self.end({","            image: true","          , location: res.headers.location","        });","      } else {","        self.end();","      }","    });","","  }).on('error', function (err) {","    self.callback({","        error: 'Error processing https request'","      , exception: err","    }, null);","  });","","};","","","/**"," *"," */","","exports.get = function(url, fn) {","  if (typeof url !== 'string') {","    return fn({","            error: 'Graph api url must be a string'","          }, null);","  }","  ","  return new Graph('GET', url, fn);","};","","/**"," *"," */","","exports.search = function (options, fn) {","  options = options || {};","  var url = '/search?' + querystring.stringify(options);","  return new Graph('GET', url, fn);","};","","/**"," *"," */","","exports.authorizeUrl = function (opts) {","  if (!opts) {","    throw new Error('AuthorizeUrl Must have a redirectUri');","  }","","  return  'https://www.facebook.com/dialog/oauth?' ","            + querystring.stringify(opts);","};","","/**"," *"," */","","exports.setAccessToken = function(token) {","  accessToken = { access_token: token };","};","","/**"," *"," */","","exports.getAccessToken = function () {","  return accessToken.access_token;","};","","// /**","//  *","//  */","// ","// exports.setAccessToken = function(config, code, fn) {","//   var callback = fn || exports.noop;","//   ","//   var oAuth = new OAuth(","//       config.appId","//     , config.secret","//     , 'https://' + exports.graphUrl","//   );","// ","//   oAuth.getOAuthAccessToken(code, { ","//     redirect_uri: config.callback ","//   }, callback);","// };"];

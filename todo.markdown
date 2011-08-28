@@ -1,7 +1,8 @@
->- test all links related to **open** graph api 
->- test missing slash 
 
->- Tests that require access token 
+/*>- test all links related to **open** graph api */
+/*>- test missing slash */
+
+/*>- Tests that require access token */
 >  '/me/friends'
 
 - assume we have a valid access token  and go from there for now

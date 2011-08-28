@@ -4,6 +4,7 @@ var graph  = require('graph')
   , FBConfig = require('config').facebook;
 
 
+
 module.exports = {
 
   'should have the correct graph url': function () {
@@ -23,7 +24,6 @@ module.exports = {
   },
 
   'should throw and error for parsing invalid json': function () {
-    // graph.graphUrl = '###';
     graph.get('', function(err, res) {
       assert.equal(err.error, 'Error parsing json', 
         'Should throw an error while parsing json');
@@ -43,7 +43,7 @@ module.exports = {
   },
 
   'should return an error if api url is not a string': function () {
-    graph.get({you: 'shall not pass'}, function(err, res) {
+    graph.get({ you: 'shall not pass' }, function(err, res) {
       assert.equal(err.error, 'Graph api url must be a string',
         'Should return an error if api url is not a string');
     });
@@ -71,7 +71,7 @@ module.exports = {
   },
 
   // Async tests that require an Acess Token
-  // =================================
+  // =======================================
 
   'Access token tests': function (beforeExit) {
 
@@ -86,7 +86,7 @@ module.exports = {
       '&method=post' + 
       '&access_token=' + FBConfig.appId + '|' + FBConfig.appSecret;
 
-    console.log('Please hold... Grabbing an access token from Facebook');
+      console.log('\x1B[32m[graphapi]\x1B[0m Grabbing test access token from facebook');
     
     // Get Access token before continuing with tests
     graph.get(encodeURI(testUserUrl), function (err, res) {
@@ -114,6 +114,9 @@ module.exports = {
       graph.get(url, function (err, res) {
         assert.equal('817129783203', res.id, 'response id should be valid');
         asyncTestCount++;
+
+        console.log('\x1B[32m[graphapi]\x1B[0m async tests run: ', asyncTestCount);
+
       });
 
       // Test: Test users should have proper permissions
@@ -130,6 +133,8 @@ module.exports = {
         res.data[0].should.include.keys(permissions);
 
         asyncTestCount++;
+        console.log('\x1B[32m[graphapi]\x1B[0m async tests run: ', asyncTestCount);
+
       });
 
       // Test: Perform a public search
@@ -140,6 +145,8 @@ module.exports = {
         assert.ok(res.data.length > 1, 'response data should not be empty');
 
         asyncTestCount++;
+        console.log('\x1B[32m[graphapi]\x1B[0m async tests run: ', asyncTestCount);
+
       });
 
       // Test: Perform a access token required search
@@ -155,7 +162,10 @@ module.exports = {
         assert.ok(res.data.length > 1, 'response data should not be empty');
 
         asyncTestCount++;
+        console.log('\x1B[32m[graphapi]\x1B[0m async tests run: ', asyncTestCount);
+
       });
+
 
     });
 
@@ -164,6 +174,5 @@ module.exports = {
       assert.equal(expectedTests, asyncTestCount, 
                   'All async tests should be executed');
     });
-
   }
 };

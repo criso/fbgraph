@@ -1,4 +1,4 @@
-var graph  = require('../lib/graph')
+var graph    = require('../lib/graph')
   , FBConfig = require('../lib/config').facebook;
 
 function includesKeys(search, obj) {
@@ -9,19 +9,15 @@ function includesKeys(search, obj) {
   var keys = Object.keys(obj);
 
   return keys.filter(function (elem) {
-  return search.indexOf(elem) !== -1;
+    return search.indexOf(elem) !== -1;
   }).length === search.length;
-
 }
 
 module.exports = {
 
-  'should have the correct graph url': function (test) {
-    test.expect(2);
-	test.ok(graph.hasOwnProperty('graphUrl'), 'graph url should exist');
-    test.ok(graph.graphUrl === 'graph.facebook.com', 
-        'graph url should be graph.facebook.com');
-
+  'graphUrl should be graph.facebook.com': function (test) {
+    test.expect(1);
+    test.ok(graph.getGraphUrl() === 'graph.facebook.com');
     test.done();
   },
 

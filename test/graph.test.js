@@ -1,195 +1,180 @@
-var graph    = require('../lib/graph')
-  , FBConfig = require('../lib/config').facebook;
+var graph      = require('../lib/graph')
+	, FBConfig = require('../lib/config').facebook
+	, vows     = require('vows')
+	, events   = require('events')
+	, assert   = require('assert');
 
-function includesKeys(search, obj) {
-  if (!Array.isArray(search)) {
-  search = [search];
-  }
 
-  var keys = Object.keys(obj);
 
-  return keys.filter(function (elem) {
-    return search.indexOf(elem) !== -1;
-  }).length === search.length;
-}
+// Create test suite
+vows.describe('Graph Api').addBatch({
+    'GraphApi': {
 
-module.exports = {
+        'setting': {
+            topic: graph,
 
-  'graphUrl should be graph.facebook.com': function (test) {
-    test.expect(1);
-    test.ok(graph.getGraphUrl() === 'graph.facebook.com');
-    test.done();
-  },
+            'graphUrl should be graph.facebook.com': function (graph) {
+                assert.ok(graph.getGraphUrl() === 'graph.facebook.com');
+            }
+        },
 
-  'test retrieving data from the api': function (test) {
-    test.expect(1);
+        'tests that do *not* require an access token ': {
+            'when getting by username': {
+                // topic: graph,   
+                topic: function() { graph.get('/btaylor', this.callback) },
 
-    graph.get('/btaylor', function(err, res) {
-      test.ok(includesKeys(['username', 'name', 'first_name', 'last_name'], res));
-      test.done();
-    });
-  },
+                'should get public data': function (err, res) {
+                    assert.include(res, 'username');
+                    assert.include(res, 'name');
+                    assert.include(res, 'first_name');
+                    assert.include(res, 'last_name');
+                }
+            },
 
-  'test bad facebook url should return error': function (test) {
-    test.expect(1);
+            'when requesting an url for a user that does not exist': {
+                topic: function () { graph.get('/thisUserNameShouldNotExist', this.callback) },
 
-    graph.get('/thisUserNameShouldNotExist', function(err, res) {
-      test.ok(includesKeys('error', res));
-      test.done();
-    });
-  },
+                'should return an error': function (err, res) {
+                    assert.include(res, 'error');
+                }
+            },
 
-  'should throw and error for parsing invalid json': function (test) {
-    test.expect(1);
+            'when using an empty api url': {
+                topic: function() { graph.get('', this.callback) },
 
-    graph.get('', function(err, res) {
-      test.equal(err.error, 'Error parsing json', 
-      'Should throw an error while parsing json');
-      test.done();
-    });
-  },
+                'should throw and error for parsing invalid json': function (err, res) {
+                    assert.equal(err.error, 'Error parsing json',
+                    'Should throw an error while parsing json');
+                }
+            },
 
-  'should return an error for invalid url': function (test) {
-    test.expect(1);
+            'when not using a string as an api url': {
+                topic: function () { graph.get({ you: 'shall not pass' }, this.callback) },
 
-    var url      = graph.graphUrl;
-    graph.graphUrl = '###';
+                'should return an api must be a string error': function (err, res) {
+                    assert.equal(err.error, 'Graph api url must be a string',
+                    'Should return an error if api url is not a string');
+                }
+            },
 
-    graph.get('', function(err, res) {
-      test.equal(err.error, 'Error processing https request', 
-      'Should return an error processing the https request');
+            'when requesting a public profile picture': {
+                topic: function () { graph.get('/zuck/picture', this.callback) },
 
-      graph.graphUrl = url;
-      test.done();
-    });
-  },
+                'should get an image and return a json with its location ': function (err, res) {
+                    assert.include(res, 'image');
+                    assert.include(res, 'location');
+                }
+            },
 
-  'should return an error if api url is not a string': function (test) {
-    test.expect(1);
+            'when requesting an api url with a missing slash': {
+                topic: function () { graph.get('zuck/picture', this.callback) },
 
-    graph.get({ you: 'shall not pass' }, function(err, res) {
-      test.equal(err.error, 'Graph api url must be a string',
-      'Should return an error if api url is not a string');
+                'should be able to get valid data': function (err, res) {
+                    assert.include(res, 'image');
+                    assert.include(res, 'location');
+                }
+            },
 
-      test.done();
-    });
-  },
+            'when trying to access data that requires an access token': {
+                topic: function () { graph.get('/817129783203', this.callback) },
 
-  'should get an image and return a json with its location ': function (test) {
-    test.expect(1);
+                'should return an OAuthException error': function (err, res) {
+                    assert.include(res, 'error');
+                    assert.equal(res.error.type, 'OAuthException',
+                      'Response from facebook should be an OAuthException');
+                }
+            },
 
-    graph.get('/markzuckerberg/picture', function(err, res) {
-      test.ok(includesKeys(['image', 'location'], res));
-      test.done();
-    });
-  },
+            'when performing a public search ': {
+                topic: function () { graph.search({ q: 'watermelon', type: 'post' }, this.callback) },
 
-  'should be able to get an image using url with a missing slash': function (test) {
-    test.expect(1);
+                'should return valid data': function (err, res) {
+                    assert.ok(Array.isArray(res.data), 'response data should be an array');
+                    assert.ok(res.data.length > 1, 'response data should not be empty');
+                }
+            },
 
-    graph.get('markzuckerberg/picture', function(err, res) {
-      test.ok(includesKeys(['image', 'location'], res));
-      test.done();
-    });
-  },
+        },
 
-  'graph urls that require a token should return an error': function (test) {
-    test.expect(2);
+        'tests that *require* an access token': {
 
-    graph.get('/817129783203', function (err, res) {
-      test.ok(includesKeys('error', res));
-      test.equal(res.error.type, 'OAuthException',
-      'Response from facebook should be an OAuthException');
+            'after getting a valid token': {
+                topic: function () {
 
-      test.done();
-    });
-  },
+                    var testUserUrl = '/' + FBConfig.appId + '/accounts/test-users?' + 
+                    'installed=true' + 
+                    '&name=Ricky Bobby' +
+                    '&permissions=' + FBConfig.scope +
+                    '&method=post' + 
+                    '&access_token=' + FBConfig.appId + '|' + FBConfig.appSecret;
 
-  // Tests that require an Acess Token
-  // =======================================
+                    var promise = new events.EventEmitter();
 
-  'should get a valid access token': function (test) {
-    test.expect(1);
+                    graph.get(encodeURI(testUserUrl), function(err, res) {
+                        if (!res || res.error
+                            && res.error.message.indexOf('Service temporarily unavailable')) {
 
-    var testUserUrl = '/' + FBConfig.appId + '/accounts/test-users?' + 
-      'installed=true' + 
-      '&name=Ricky Bobby' +
-      '&permissions=' + FBConfig.scope +
-      '&method=post' + 
-      '&access_token=' + FBConfig.appId + '|' + FBConfig.appSecret;
+                            promise.emit('error', err); 
+                            console.error("Can't retreive access token from facebook\n" + 
+                            "Try again in a few minutes");
+                        } else {
+                            graph.setAccessToken(res.access_token);
+                            promise.emit('success', res); 
+                        }
+                    });
 
-    console.log('\x1B[32m[graphapi]\x1B[0m Grabbing test access token from facebook');
+                    return promise;
+                },
 
-    // Get Access token before continuing with tests
-    graph.get(encodeURI(testUserUrl), function (err, res) {
+                'should have valid keys': function(err, res) {
+                    assert.include(res, 'id');
+                    assert.include(res, 'access_token');
+                    assert.include(res, 'login_url');
+                    assert.include(res, 'email');
+                    assert.include(res, 'password');
+                },
 
-      // Might fail due to facebook's awesomeness
-      // ========================================
-      if (res.error && 
-        res.error.message.indexOf('Service temporarily unavailable')) {
+                'when getting data from a protected page': {
+                    topic: function () { graph.get('/817129783203', this.callback) },
 
-        console.error("Can't retreive access token from facebook\n" + 
-              "Try again in a few minutes");
-        console.log(res.error);
-        process.exit(1);
-      }
+                    'response should be valid': function(err, res) {
+                        assert.equal('817129783203', res.id, 'response id should be valid');
+                    }
+                },
 
-      test.ok(includesKeys(['id','access_token','login_url','email','password'], res));
+                'when getting a user permissions': {
+                    topic: function () { graph.get('/me/permissions', this.callback) },
 
-      graph.setAccessToken(res.access_token);
-      test.done();
-    });
-  },
+                    'test user should have proper permissions': function (err, res) {
+                        var permissions = FBConfig.scope
+                                                .replace(/ /g,'')
+                                                .split(',');
 
-  'should be able to grab data using an access token': function (test) {
-    test.expect(1);
+                        permissions.push('installed');
 
-    graph.get('/817129783203', function (err, res) {
-      test.equal('817129783203', res.id, 'response id should be valid');
-      test.done();
-    });
-  },
+                        permissions.forEach(function(key) {
+                            assert.include(res.data[0], key);
+                        });
+                    }
+                },
 
-  'users should have proper permissions': function (test) {
-    test.expect(2);
+                'when performing a search': {
+                    topic: function () { 
+                        var searchOptions = {
+                              q:       'coffee'
+                            , type:    'place'
+                            , center:  '37.76,-122.427'
+                            , distance: 1000
+                        };
 
-    graph.get('/me/permissions', function (err, res) {
-      var permissions = FBConfig.scope
-                                .replace(/ /g,'')
-                                .split(',');
+                        graph.search(searchOptions, this.callback);
+                    }, 
 
-      permissions.push('installed');
-
-      test.ok(Array.isArray(res.data), 'response data should be an array');
-      test.ok(includesKeys(permissions, res.data[0]));
-      test.done();
-    });
-  },
-
-  'should perform a public search': function (test) {
-    test.expect(2);
-
-    graph.search({ q: 'watermelon', type: 'post' }, function (err, res) {
-      test.ok(Array.isArray(res.data), 'response data should be an array');
-      test.ok(res.data.length > 1, 'response data should not be empty');
-      test.done();
-    });
-  },
-
-  'should perform an access token required search': function (test) {
-    test.expect(2);
-
-    var searchOptions = {
-        q:       'coffee'
-      , type:    'place'
-      , center:  '37.76,-122.427'
-      , distance: 1000
-    };
-    graph.search(searchOptions, function (err, res) {
-      test.ok(Array.isArray(res.data), 'response data should be an array');
-      test.ok(res.data.length > 1, 'response data should not be empty');
-      test.done();
-    });
-  }
-
-};
+                    'an access token required search should return valid data': function (err, res) {
+                        assert.ok(res.data.length > 1, 'response data should not be empty');
+                    }
+                }
+            }
+        }
+    }
+}).export(module);

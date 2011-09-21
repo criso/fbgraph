@@ -1,3 +1,17 @@
+########### 
+# Next
+###########
+ - finish porting the vows test
+ - commit 
+ - start on post api
+
+
+
+
+
+
+
+
 # ON code
 Mimic this:
 - https://developers.facebook.com/docs/reference/javascript/

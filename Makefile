@@ -1,11 +1,11 @@
 TESTS = $(shell find test/*.test.js)
 
 test:
-	@NODE_ENV=test nodeunit \
+	@NODE_ENV=test vows --spec \
 	$(TESTFLAGS) \
 	$(TESTS) 
 
 test-cov:
-	@TESTFLAGS=--cov $(MAKE) test
+	@TESTFLAGS=--cover-plain $(MAKE) test
 
 .PHONY: test

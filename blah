@@ -1,0 +1,37 @@
+{ topic: function () {
+    fs.stat('~/FILE', this.callback);
+  },
+  'can be accessed': function (err, stat) {
+    assert.isNull   (err);        // We have no error
+    assert.isObject (stat);       // We have a stat object
+  },
+  'is not empty': function (err, stat) {
+    assert.isNotZero (stat.size); // The file size is > 0
+  }
+}
+
+
+
+
+
+
+
+
+
+{ topic: function () {
+    fs.stat('~/FILE', this.callback);
+  },
+  'after a successful `fs.stat`': {
+    topic: function (stat) {
+      fs.open('~/FILE', "r", stat.mode, this.callback);
+    },
+    'after a successful `fs.open`': {
+      topic: function (fd, stat) {
+        fs.read(fd, stat.size, 0, "utf8", this.callback);
+      },
+      'we can `fs.read` to get the file contents': function (data) {
+        assert.isString (data);
+      }
+    }
+  }
+}

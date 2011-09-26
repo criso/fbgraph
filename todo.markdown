@@ -1,13 +1,7 @@
 ########### 
 # Next
 ###########
- - finish porting the vows test
- - commit 
- - start on post api
-
-
-
-
+- user1 post on user2's wall
 
 
 

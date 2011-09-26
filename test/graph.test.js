@@ -8,19 +8,20 @@ var graph    = require("../lib/graph")
 var testUser1      = {}
   , appAccessToken = FBConfig.appId + "|" + FBConfig.appSecret;
 
-// Create test suite
+
 vows.describe("graph.test").addBatch({
-  "When accessing the graphApi": {
-
-    "setting": {
-      topic: graph,
-
-      "graphUrl should be graph.facebook.com": function (graph) {
-        assert.ok(graph.getGraphUrl() === "graph.facebook.com");
-      }
+  "Before starting a test suite": {
+    topic:  function () {
+      return graph.setAccessToken(null);
     },
 
-    "with no access token": {
+    "*access token* should be null": function (graph) {
+      assert.isNull(graph.getAccessToken());
+    }
+  }
+}).addBatch({
+  "When accessing the graphApi": {
+    "with no *access token* ": {
       "and searching for pulblic data via username": {
         topic: function() {
           graph.get("/btaylor", this.callback);
@@ -106,14 +107,15 @@ vows.describe("graph.test").addBatch({
         },
 
         "should return valid data": function (err, res) {
-          assert.ok(Array.isArray(res.data), "response data should be an array");
+	        assert.isNotNull(res);	
+          assert.isArray(res.data);
           assert.ok(res.data.length > 1, "response data should not be empty");
         }
       },
 
     },
 
-    "with an `Access Token`": {
+    "with an *Access Token* ": {
       topic: function () {
 
         // create test user
@@ -146,7 +148,7 @@ vows.describe("graph.test").addBatch({
 
       // following tests will only happen after 
       // an access token has been set
-      "result `keys` should be valid": function(err, res) {
+      "result *keys* should be valid": function(err, res) {
         assert.isNull(err);
         assert.include(res, "id");
         assert.include(res, "access_token");
@@ -197,7 +199,7 @@ vows.describe("graph.test").addBatch({
           graph.search(searchOptions, this.callback);
         },
 
-        "an access token required search should return valid data": function (err, res) {
+        "an *access token* required search should return valid data": function (err, res) {
           assert.isNull(err);
           assert.ok(res.data.length > 1, "response data should not be empty");
         }

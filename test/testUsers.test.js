@@ -92,7 +92,7 @@ vows.describe("testUser.test").addBatch({
             assert.isTrue(res);
           },
 
-          "- a post on *user1*'s wall" : {
+          " - a post on *user1*'s wall" : {
             topic: function() {
               graph.setAccessToken(testUser1.access_token);
               graph.post(testUser2.id + "/feed", wallPost, this.callback);

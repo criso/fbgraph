@@ -1,7 +1,12 @@
 ########### 
 # Next
 ###########
-- user1 post on user2's wall
+
+- Get Access Token (same way as js sdk)
+  - if user has previously connected, we should be able to 
+  get the access token
+
+- Oauth won't be handled by the api (leave that for oauth package)
 
 
 
@@ -14,27 +19,3 @@ Mimic this:
     - set the access token using everyauth
     - use setAccessToken()
     - on request if accessToken isn't set, we should get one
-
-# Test 
-# GET
-  - api.get > done
-    - no access token > done
-    - access token > done
-      - get > done
-      - search  > done
-
-# POST
-  - Post api (facebook publishing) - http://developers.facebook.com/docs/reference/api/
-    You can publish to the Facebook graph by issuing HTTP POST requests to the appropriate 
-    connection URLs, using an access token. For example, you can post a new wall post on 
-    Arjun's wall by issuing a POST request to https://graph.facebook.com/arjun/feed
-    - graph.post
-
-# DELETE
-  DELETE https://graph.facebook.com/ID?access_token=... HTTP/1.1
-
-# BATCH requests -  
-  https://developers.facebook.com/docs/reference/api/batch/
-
-# INSIGHTS  (nice to have)
-

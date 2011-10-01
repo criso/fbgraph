@@ -1,11 +1,23 @@
 {
-    "name": "application-name"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.4.3"
-    , "jade": ">= 0.0.1"
-    , "everyauth":  ">= 0.2.17"
-	, "oauth": ">=0.9.3"
+  "name": "fbgraph",
+  "version": "0.0.1",
+  "description": "a cleaner client to access the facebook graph api",
+  "keywords": [
+    "facebook",
+    "api",
+    "graph"
+  ],
+  "author": "Cristiano Oliveira <ocean.cris@gmail.com>",
+  "devDependencies": {
+    "vows": ">= 0.5.11"
+  },
+  "main": "index",
+  "engines": {
+    "node": "0.4.x"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/criso/graphapi.git"
   }
 }

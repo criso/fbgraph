@@ -117,20 +117,22 @@ vows.describe("graph.test").addBatch({
 
     "with an *Access Token* ": {
       topic: function () {
-
-        // create test user
-        var testUserUrl = "/" + FBConfig.appId + "/accounts/test-users?" + 
-          "installed=true" + 
-          "&name=Ricky Bobby" +
-          "&permissions=" + FBConfig.scope +
-          "&method=post" + 
-          "&access_token=" + appAccessToken;
-
         var promise = new events.EventEmitter();
 
-        graph.get(encodeURI(testUserUrl), function(err, res) {
+        // create test user
+        var testUserUrl = FBConfig.appId + "/accounts/test-users";
+        var params = {
+            installed:     true
+          , name:          "Ricky Bobby"
+          , permissions:   FBConfig.scope
+          , method:        "post"
+          , access_token:  appAccessToken
+        };
+
+        graph.get(testUserUrl, params, function(err, res) {
+
           if (!res || res.error
-          && res.error.message.indexOf("Service temporarily unavailable")) {
+            && ~res.error.message.indexOf("Service temporarily unavailable")) {
 
             promise.emit("error", err);
             console.error("Can't retreive access token from facebook\n" +
@@ -181,6 +183,7 @@ vows.describe("graph.test").addBatch({
             .split(",");
 
           permissions.push("installed");
+
           permissions.forEach(function(key) {
             assert.include(res.data[0], key);
           });

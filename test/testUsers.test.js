@@ -27,14 +27,17 @@ vows.describe("testUser.test").addBatch({
 }).addBatch({
   "With test users": {
     topic: function () {
-      var testUserUrl = "/" + FBConfig.appId + "/accounts/test-users?" + 
-        "installed=true" + 
-        "&name=rocket man" +
-        "&permissions=" + FBConfig.scope +
-        "&method=post" +
-        "&access_token=" + appAccessToken;
+      // create test user
+      var testUserUrl = FBConfig.appId + "/accounts/test-users";
+      var params = {
+          installed:     true
+        , name:          "Rocket Man"
+        , permissions:   FBConfig.scope
+        , method:        "post"
+        , access_token:  appAccessToken
+      };
 
-      graph.get(encodeURI(testUserUrl), this.callback);
+      graph.get(testUserUrl, params, this.callback);
     },
 
     "we should be able to create *user 1*": function(res) {
@@ -45,14 +48,17 @@ vows.describe("testUser.test").addBatch({
       topic: function (res) {
         testUser1 = res;
 
-        var testUserUrl = "/" + FBConfig.appId + "/accounts/test-users?" + 
-          "installed=true" +
-          "&name=magic man" +
-          "&permissions=" + FBConfig.scope +
-          "&method=post" + 
-          "&access_token=" + appAccessToken;
+        // create test user
+        var testUserUrl = FBConfig.appId + "/accounts/test-users";
+        var params = {
+            installed:     true
+          , name:          "Magic Man"
+          , permissions:   FBConfig.scope
+          , method:        "post"
+          , access_token:  appAccessToken
+        };
 
-        graph.get(encodeURI(testUserUrl), this.callback);
+        graph.get(testUserUrl, params, this.callback);
       },
 
       "we should be able to create *user 2*": function(res) {

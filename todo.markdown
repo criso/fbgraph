@@ -2,6 +2,8 @@
 # Next
 ###########
 
+- npm package setup
+
 - Get Access Token (same way as js sdk)
   - if user has previously connected, we should be able to 
   get the access token

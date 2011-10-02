@@ -116,7 +116,8 @@ graph.del(postID, function(err, res) {
 
 ## Running tests
 
- Add your Facebook `appId` and `appSecret` to tests/config.js (this is needed to create `test users` and to get a test `access_token`)
+ Before running the test suite, add your Facebook `appId` and `appSecret`   
+ to `tests/config.js` (this is needed to create `test users` and to get a test `access_token`)
 
     $ make test
 

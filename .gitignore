@@ -1,5 +1,3 @@
 *.swp
 dev_only/*
 
-# avoid committing my own facebook app config
-test/config.js

@@ -30,7 +30,7 @@ Before making calls that require an `access token` be sure to set the token
 graph.setAccessToken(accessToken);
 ```
 
-## Reading data from the Graph Api
+## Read data from the Graph Api
 
 ```js
 graph.get("zuck", function(err, res) {
@@ -65,7 +65,7 @@ graph.get("/zuck/picture", function(err, res) {
 });
 ```
 
-## Searching data
+## Search data from the Graph Api
 
 Search for public posts that contain __brogramming__
 
@@ -80,7 +80,7 @@ graph.search(searchOptions, function(err, res) {
 });
 ```
 
-## Publishing data to the Graph Api
+## Publish data to the Graph Api
 All publish requests will require an `access token`
 
 only needs to be set once

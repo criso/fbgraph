@@ -1,4 +1,4 @@
-var graph    = require("../lib/graph")
+var graph    = require("../index")
   , FBConfig = require("./config").facebook
   , vows     = require("vows")
   , events   = require("events")

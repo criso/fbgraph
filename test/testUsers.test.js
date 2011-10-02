@@ -1,5 +1,5 @@
 var graph    = require("../lib/graph")
-  , FBConfig = require("../lib/config").facebook
+  , FBConfig = require("./config").facebook
   , vows     = require("vows")
   , events   = require("events")
   , assert   = require("assert");
@@ -8,9 +8,7 @@ var graph    = require("../lib/graph")
 var testUser1      = {}
   , testUser2      = {}
   , appAccessToken = FBConfig.appId + "|" + FBConfig.appSecret
-  , wallPost       = {
-    message: "I'm gonna come at you like a spider monkey, chip"
-  };
+  , wallPost       = { message: "I'm gonna come at you like a spider monkey, chip" };
 
 
 vows.describe("testUser.test").addBatch({

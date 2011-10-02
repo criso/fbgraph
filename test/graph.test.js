@@ -1,5 +1,5 @@
 var graph    = require("../lib/graph")
-  , FBConfig = require("../lib/config").facebook
+  , FBConfig = require("./config").facebook
   , vows     = require("vows")
   , events   = require("events")
   , assert   = require("assert");
@@ -51,7 +51,10 @@ vows.describe("graph.test").addBatch({
         },
 
         "should throw an error for parsing invalid json": function (err, res) {
-          assert.equal(err.error, "Error parsing json",
+          assert.isNotNull(err);
+          assert.isNotNull(err.message);
+          assert.isNotNull(err.exception);
+          assert.equal(err.message, "Error parsing json",
             "Should throw an error while parsing json");
         }
       },
@@ -107,7 +110,7 @@ vows.describe("graph.test").addBatch({
         },
 
         "should return valid data": function (err, res) {
-	        assert.isNotNull(res);	
+          assert.isNotNull(res);	
           assert.isArray(res.data);
           assert.ok(res.data.length > 1, "response data should not be empty");
         }
@@ -212,8 +215,7 @@ vows.describe("graph.test").addBatch({
 }).addBatch({
   "When tests are over": {
     topic: function () {
-      var deleteUrl = testUser1.id + "?method=delete";
-      graph.post(deleteUrl, this.callback);
+      graph.del(testUser1.id, this.callback);
     },
 
     "test users should be removed": function(res){

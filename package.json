@@ -9,15 +9,15 @@
   ],
   "author": "Cristiano Oliveira <ocean.cris@gmail.com>",
   "devDependencies": {
-    "vows": ">= 0.5.11"
+    "vows": "0.5.x"
   },
   "main": "index",
   "engines": {
-    "node": "0.4.x"
+    "node": ">= 0.4.1"
   },
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "git://github.com/criso/graphapi.git"
+    "url": "git://github.com/criso/fbgraph.git"
   }
 }

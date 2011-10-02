@@ -12,6 +12,11 @@ Geting data from the graph api
 
   Before making calls that require an `access token` be sure to set the token
 
+## Installation
+    $ npm install fbgraph
+    
+    var graph = require('fbgraph');
+    
 
 ## Setting an access token
 ```js

@@ -1,16 +1,16 @@
 # Facebook Graph API
 
-Geting data from the graph api
+Nodejs module to access the graph api
 
 ## About
 
-  I created this, because I wanted to access FB's graph from `node`. The libraries I found felt clunky to me, and I needed an excuse to create a node module.
+  I created this, because I wanted to access FB's graph from `node`.  
+  The libraries I found felt clunky to me, and I needed an excuse to create a node module.
 
 ## Oh nooooooesss
-  This library doesn't provide any facebook authentication.
+  This library __doesn't__ provide any __facebook authentication__.  
   Usually authentication happens in lots of flavours `facebook`, `twitter`, `your own!`, and this problem has already been solved by a variety of modules such as `everyauth`or `connect-auth`
 
-  Before making calls that require an `access token` be sure to set the token
 
 ## Installation
     $ npm install fbgraph
@@ -19,6 +19,9 @@ Geting data from the graph api
     
 
 ## Setting an access token
+
+Before making calls that require an `access token` be sure to set the token
+
 ```js
 graph.setAccessToken(accessToken);
 ```

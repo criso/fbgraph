@@ -1,4 +1,4 @@
-# Facebook Graph API
+# fbgraph
 
 Nodejs module to access the graph api
 
@@ -8,8 +8,12 @@ Nodejs module to access the graph api
   The libraries I found felt clunky to me, and I needed an excuse to create a node module.
 
 ## Oh nooooooesss
-  This library __doesn't__ provide any __facebook authentication__.  
-  Usually authentication happens in lots of flavours `facebook`, `twitter`, `your own!`, and this problem has already been solved by a variety of modules such as `everyauth`or `connect-auth`
+
+  This library __doesn't__ provide any __facebook authentication__.
+  
+  Usually authentication happens in lots of flavours `facebook`, `twitter`, `your own!`.  
+  Since this problem has already been solved by a variety of modules such as `everyauth`or `connect-auth`    
+  I decided not to account for it here.
 
 
 ## Installation
@@ -34,7 +38,7 @@ graph.get("zuck", function(err, res) {
 });
 ```
 
-`params` in the url
+params in the `url`
 
 ```js
 graph.get("zuck?fields=picture", function(err, res) {
@@ -42,10 +46,11 @@ graph.get("zuck?fields=picture", function(err, res) {
 });
 ```
 
-`params` as an object
+params as an `object`
 
 ```js
 var params = { fields: picture };
+
 graph.get("zuck", params,  function(err, res) {
   console.log(res); // { picture: "http://profile.ak.fbcdn.net/..." }
 });
@@ -115,7 +120,7 @@ graph.del(postID, function(err, res) {
 
     $ make test
 
- _Tests might fail due to the Facebook api having an issue._
+ _Tests might fail if the Facebook api has an issue._
 
 ## License
 

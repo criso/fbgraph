@@ -4,7 +4,7 @@ Nodejs module to access the graph api
 
 ## About
 
-  I created this, because I wanted to access FB's graph from `node`.  
+  I created this because I wanted to access FB's graph from `node`.  
   The libraries I found felt clunky to me, and I needed an excuse to create a node module.
 
 ## Oh nooooooesss

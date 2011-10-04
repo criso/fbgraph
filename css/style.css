@@ -1,0 +1,66 @@
+body {
+  padding: 0px 80px;
+  margin: 0;
+  font: 14px/1.5 "Helvetica Neue", Helvetica, sans-serif;
+  background-color:  #FFF;
+  text-align: center;
+}
+
+h1 {
+  text-shadow: 0 1px 1px #262626;
+}
+
+h2 {
+  padding: 30px 0px 0px;
+}
+
+#content {
+  margin: 0 auto;
+  padding: 50px 40px;
+  text-align: left;
+  background: white;
+  width: 870px;
+  -webkit-box-shadow: 0px 2px 15px 1px #DDD;
+}
+
+
+
+p code {
+  border: 1px solid #ECEA75;
+  padding: 1px 3px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background: #FDFCD1;
+}
+
+pre {
+  padding: 20px 25px;
+	border: 1px dashed #E6EBE0;
+	-moz-box-shadow: 0 0px 15px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0px 15px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0px 15px rgba(0, 0, 0, 0.5);
+	text-shadow: 0 -1px 1px #262626;
+  background-color: #262626;
+  font-family: 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', 'Monaco', Courier, monospace !important;
+	color: #EBEFE7;
+}
+
+
+code .string, 
+code .regexp {
+  color: #B5C587;
+}
+
+code .keyword {
+  color: #C2A770;
+  font-weight: normal;
+}
+
+code .number {
+  color: #A33D29;
+}
+
+code .comment {
+  color: rgba(255, 255, 255, 0.5);
+}

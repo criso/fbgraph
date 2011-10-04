@@ -1,1 +1,132 @@
-My Page
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FBGraph - Stay classy facebook</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div id="content">
+<h1>Bro, It's the Faceobok Graph !</h1>
+
+<p><a href="http://github.com/criso/fbgraph">FBgraph</a> is a nodejs module that provides easy access to the facebook graph api</p>
+
+<h2>About</h2>
+
+<p>I created this, because I wanted to access FB's graph from <code>node</code>. <br />
+  The libraries I found felt clunky to me, and I needed an excuse to create a node module.</p>
+
+<h2>Oh nooooooesss</h2>
+
+<p>This library <strong>doesn't</strong> provide any <strong>facebook authentication</strong>.</p>
+
+<p>Usually authentication happens in lots of flavours <code>facebook</code>, <code>twitter</code>, <code>your own!</code>. <br />
+  Since this problem has already been solved by a variety of modules such as <code>everyauth</code>or <code>connect-auth</code> <br />
+  I decided not to account for it here.</p>
+
+<h2>Installation via npm</h2>
+
+<pre><code>$ npm install fbgraph  
+
+var graph = require('fbgraph');
+</code></pre>
+
+<h2>Setting an access token</h2>
+
+<p>Before making calls that require an <code>access token</code> be sure to set the token</p>
+
+<pre><code>graph.setAccessToken(accessToken);
+</code></pre>
+
+<h2>Read data from the Graph Api</h2>
+
+<pre><code>graph.get("zuck", function(err, res) {
+  console.log(res); // { id: '4', name: 'Mark Zuckerberg'... }
+});
+</code></pre>
+
+<p>params in the <code>url</code></p>
+
+<pre><code>graph.get("zuck?fields=picture", function(err, res) {
+  console.log(res); // { picture: 'http://profile.ak.fbcdn.net/'... }
+});
+</code></pre>
+
+<p>params as an <code>object</code></p>
+
+<pre><code>var params = { fields: picture };
+
+graph.get("zuck", params,  function(err, res) {
+  console.log(res); // { picture: "http://profile.ak.fbcdn.net/..." }
+});
+</code></pre>
+
+<p>GraphApi calls that redirect directly to an image
+will return a json response with relevant fields</p>
+
+<pre><code>graph.get("/zuck/picture", function(err, res) {
+  console.log(res); // { image: true, location: "http://profile.ak.fb..." }
+});
+</code></pre>
+
+<h2>Search data from the Graph Api</h2>
+
+<p>Search for public posts that contain <strong>brogramming</strong></p>
+
+<pre><code>var searchOptions = {
+    q:     "brogramming"
+  , type:  "post"
+};
+
+graph.search(searchOptions, function(err, res) {
+  console.log(res); // {data: [{id: xxx, from: ...}, {id: xxx, from: ...}]}
+});
+</code></pre>
+
+<h2>Publish data to the Graph Api</h2>
+
+<p>All publish requests will require an <code>access token</code></p>
+
+<p>only needs to be set once</p>
+
+<pre><code>graph.setAccessToken(accessToken);
+</code></pre>
+
+<p>Post a message on a <code>friend's</code> wall</p>
+
+<pre><code>var wallPost = {
+  message: "I'm gonna come at you like a spider monkey, chip!"
+};
+
+graph.post(userId + "/feed", wallPost, function(err, res) {
+  // returns the post id
+  console.log(res); // { id: xxxxx}
+});
+</code></pre>
+
+<h2>Delete a Graph object</h2>
+
+<p>To delete a graph object, provide an <code>object id</code> and the 
+response will return <code>true</code> or <code>false</code></p>
+
+<pre><code>graph.del(postID, function(err, res) {
+  console.log(res); // true/false
+});
+</code></pre>
+
+<h2>Running tests</h2>
+
+<p>Add your Facebook <code>appId</code> and <code>appSecret</code> to <strong>tests/config.js</strong> <br />
+(this is needed to create <code>test users</code> and to get a test <code>access_token</code>)</p>
+
+<pre><code>$ npm install &amp;&amp; npm test
+</code></pre>
+
+<p><em>Tests might fail if the Facebook api has an issue.</em></p>
+	</div>
+	<a href="http://github.com/criso/fbgraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
+
+
+	<script src="js/hijs.js"></script>
+	
+  </body>
+</html>

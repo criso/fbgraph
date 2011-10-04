@@ -1,11 +1,11 @@
-# Bro, It's the Faceobok Graph !
+# It's the Facebook Graph, Bro!
 
 [FBgraph](http://github.com/criso/fbgraph) is a nodejs module that provides easy access to the facebook graph api
 
 ## About
 
   I created this, because I wanted to access FB's graph from `node`.  
-  The libraries I found felt clunky to me, and I needed an excuse to create a node module.
+  The libraries I found, felt clunky to me, and I needed an excuse to create a node module.
 
 ## Oh nooooooesss
 
@@ -99,8 +99,8 @@ response will return `true` or `false`
 
 ## Running tests
 
- Add your Facebook `appId` and `appSecret` to __tests/config.js__   
-(this is needed to create `test users` and to get a test `access_token`)
+ Before running the test suite, add your Facebook `appId` and `appSecret` to `tests/config.js`   
+ This is needed to create `test users` and to get a test `access_token`
 
     $ npm install && npm test
 

@@ -8,9 +8,6 @@
     "graph"
   ],
   "author": "Cristiano Oliveira <ocean.cris@gmail.com>",
-  "devDependencies": {
-    "vows": "0.5.x"
-  },
   "main": "index",
   "engines": {
     "node": ">= 0.4.1"
@@ -19,5 +16,11 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/criso/fbgraph.git"
+  },
+  "devDependencies": {
+    "vows": "0.5.x"
+  },
+  "scripts": {
+ 	"test": "vows --spec test/*test.js" 
   }
 }

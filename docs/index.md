@@ -2,30 +2,47 @@
 
 [FBgraph](http://github.com/criso/fbgraph) is a nodejs module that provides easy access to the facebook graph api
 
-## About
+## Oh nooooooesss - MOAR facebook
 
   I created this, because I wanted to access FB's graph from `node`.  
   The libraries I found, felt clunky to me, and I needed an excuse to create a node module.
 
-## Oh nooooooesss
-
-  This library __doesn't__ provide any __facebook authentication__.
-  
-  Usually authentication happens in lots of flavours `facebook`, `twitter`, `your own!`.  
-  Since this problem has already been solved by a variety of modules such as `everyauth`or `connect-auth`    
-  I decided not to account for it here.
-
-
 ## Installation via npm
-    $ npm install fbgraph  
-    
+    $ npm install fbgraph
+
     var graph = require('fbgraph');
-    
-## Setting an access token
 
-Before making calls that require an `access token` be sure to set the token
+## Authentication
 
-    graph.setAccessToken(accessToken);
+If you get an accesstoken via some other Oauth module like [everyauth](https://github.com/bnoguchi/everyauth) , 
+[connect-auth](https://github.com/ciaranj/connect-auth) or [node-oauth](https://github.com/ciaranj/node-oauth) you can just set  
+the access token directly. Most `get` calls, and pretty much all `post` calls will require an `access_token`
+
+    graph.setAccessToken(access_token);
+
+This is how you would get authenticated using only the `fbgraph` module.
+More details below on the __express app__ section
+
+    // get authorization url
+    var authUrl = graph.getOauthUrl({
+      "client_id":       conf.client_id
+      , "redirect_uri":  conf.redirect_uri
+    });
+
+    // shows dialog
+    res.redirect(authUrl);
+
+    // after user click, auth `code` will be set
+    // we'll send that and get the access token
+    graph.authorize({
+        "client_id":        conf.client_id
+      , "redirect_uri":   conf.redirect_uri
+      , "client_secret":  conf.client_secret
+      , "code":           req.query.code
+    }, function (err, facebookRes) {
+      res.redirect('/loggedIn');
+    });
+
 
 ## Read data from the Graph Api
 
@@ -97,12 +114,100 @@ response will return `true` or `false`
       console.log(res); // true/false
     });
 
+## Rockin' it on an Express App
+
+This example assumes that you have a link on the main page `/` that points to `/auth/facebook`.   
+The user will click this link and get into the facebook authorization flow ( if the user hasn't already connected)  
+After `authorizing` the app the user will be redirected to `/UserHasLoggedIn`  
+
+    /**
+     * Module dependencies.
+     */
+
+    var express   = require('express')
+    , graph     = require('fbgraph')
+    , app       = module.exports = express.createServer();
+
+    // this should really be in a config file!
+    var conf = {
+      client_id:        'YOUR FACEBOOK APP ID'
+      , client_secret:  'YOU FACEBOOK APP SECRET'
+      , scope:          'email, user_about_me, user_birthday, user_location, publish_stream'
+      , redirect_uri:   'http://localhost:3000/auth/facebook'
+    };
+
+    // Configuration
+
+    app.configure(function(){
+      app.set('views', __dirname + '/views');
+      app.set('view engine', 'jade');
+      app.use(express.bodyParser());
+      app.use(express.methodOverride());
+      app.use(app.router);
+      app.use(express.static(__dirname + '/public'));
+    });
+
+    app.configure('development', function(){
+      app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+    });
+
+    app.configure('production', function(){
+      app.use(express.errorHandler());
+    });
+
+    // Routes
+
+    app.get('/', function(req, res){
+      res.render("index", { title: "click link to connect" });
+    });
+
+    app.get('/auth/facebook', function(req, res) {
+
+      // we don't have a code yet
+      // so we'll redirect to the oauth dialog
+      if (!req.query.code) {
+        var authUrl = graph.getOauthUrl({
+          "client_id":       conf.client_id
+          , "redirect_uri":  conf.redirect_uri
+        });
+
+        res.redirect(authUrl);
+
+        return;
+      }
+
+      // auth `code` is set
+      // we'll send that and get the access token
+      graph.authorize({
+        "client_id":        conf.client_id
+        , "redirect_uri":   conf.redirect_uri
+        , "client_secret":  conf.client_secret
+        , "code":           req.query.code
+      }, function (err, facebookRes) {
+        res.redirect('/loggedIn');
+      });
+
+    });
+
+    // user gets sent here after being authorized
+    app.get('/UserHasLoggedIn', function(req, res) {
+      res.render("index", { title: "Logged In" });
+    });
+
+
+    var port = process.env.PORT || 3000;
+    app.listen(port, function() {
+      console.log("Express server listening on port %d", port);
+    });
+
+
 ## Running tests
 
- Before running the test suite, add your Facebook `appId` and `appSecret` to `tests/config.js`   
+ Before running the test suite, add your Facebook `appId` and `appSecret` to `tests/config.js`  
  This is needed to create `test users` and to get a test `access_token`
 
-    $ npm install && npm test
+    $ npm install
+    $ make test
 
  _Tests might fail if the Facebook api has an issue._
 

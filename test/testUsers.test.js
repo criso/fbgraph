@@ -92,7 +92,7 @@ vows.describe("testUser.test").addBatch({
           },
 
           "*user2* should accept friend request": function (res) {
-            assert.isTrue(res);
+            assert.equal(res.data, "true");
           },
 
           " - a post on *user1*'s wall" : {
@@ -135,7 +135,7 @@ vows.describe("testUser.test").addBatch({
         },
 
         "should be removed": function(res){
-          assert.isTrue(res);
+          assert.equal(res.data, "true");
         }
       },
 
@@ -145,7 +145,7 @@ vows.describe("testUser.test").addBatch({
         },
 
         "should be removed": function(res){
-          assert.isTrue(res);
+          assert.equal(res.data, "true");
         }
       }
     }

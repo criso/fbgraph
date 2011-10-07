@@ -50,12 +50,9 @@ vows.describe("graph.test").addBatch({
           graph.get("", this.callback);
         },
 
-        "should throw an error for parsing invalid json": function (err, res) {
-          assert.isNotNull(err);
-          assert.isNotNull(err.message);
-          assert.isNotNull(err.exception);
-          assert.equal(err.message, "Error parsing json",
-            "Should throw an error while parsing json");
+        "should return an empty object": function (err, res) {
+          assert.isNull(err);
+          assert.isEmpty(res.data);
         }
       },
 
@@ -219,7 +216,7 @@ vows.describe("graph.test").addBatch({
     },
 
     "test users should be removed": function(res){
-      assert.isTrue(res);
+      assert.equal(res.data, "true");
     }
   }
 }).export(module);

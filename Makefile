@@ -1,4 +1,4 @@
-TESTS = $(shell find test/*.test.js)
+TESTS = $(shell find tests/*.test.js)
 
 test:
 	@NODE_ENV=test vows --spec \

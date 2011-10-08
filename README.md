@@ -1,6 +1,6 @@
 # It's the Facebook Graph, Bro!
 
-[FBgraph](http://github.com/criso/fbgraph) is a nodejs module that provides easy access to the facebook graph api
+[FBgraph](http://criso.github.com/fbgraph/) is a nodejs module that provides easy access to the facebook graph api
 
 
 ## Oh nooooooesss - MOAR facebook

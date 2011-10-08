@@ -32,7 +32,7 @@ More details below on the __express app__ section
 ```js
     // get authorization url
     var authUrl = graph.getOauthUrl({
-      "client_id":       conf.client_id
+        "client_id":     conf.client_id
       , "redirect_uri":  conf.redirect_uri
     });
 
@@ -42,7 +42,7 @@ More details below on the __express app__ section
     // after user click, auth `code` will be set
     // we'll send that and get the access token
     graph.authorize({
-        "client_id":        conf.client_id
+        "client_id":      conf.client_id
       , "redirect_uri":   conf.redirect_uri
       , "client_secret":  conf.client_secret
       , "code":           req.query.code
@@ -94,8 +94,8 @@ Search for public posts that contain __brogramming__
 
 ```js
 var searchOptions = {
-    q: "brogramming"
-  , type: "post"
+    q:     "brogramming"
+  , type:  "post"
 };
 
 graph.search(searchOptions, function(err, res) {

@@ -15,6 +15,9 @@
 <p>I created this, because I wanted to access FB's graph from <code>node</code>. <br />
   The libraries I found, felt clunky to me, and I needed an excuse to create a node module.</p>
 
+<p>All calls will return <code>json</code>. Facebook sometimes (on friend requests, deleting test users, access token request) <br />
+  decides to just return a <code>string</code> or <code>true</code> or redirects directly to the image. I say <strong>nay-nay</strong>! Let's make it Disney, and keep things consistent! </p>
+
 <h2>Installation via npm</h2>
 
 <pre><code>$ npm install fbgraph

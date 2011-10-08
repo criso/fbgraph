@@ -28,7 +28,7 @@ More details below on the __express app__ section
 
     // get authorization url
     var authUrl = graph.getOauthUrl({
-      "client_id":       conf.client_id
+        "client_id":     conf.client_id
       , "redirect_uri":  conf.redirect_uri
     });
 
@@ -38,7 +38,7 @@ More details below on the __express app__ section
     // after user click, auth `code` will be set
     // we'll send that and get the access token
     graph.authorize({
-        "client_id":        conf.client_id
+        "client_id":      conf.client_id
       , "redirect_uri":   conf.redirect_uri
       , "client_secret":  conf.client_secret
       , "code":           req.query.code
@@ -127,13 +127,13 @@ After `authorizing` the app the user will be redirected to `/UserHasLoggedIn`
      * Module dependencies.
      */
 
-    var express   = require('express')
-    , graph     = require('fbgraph')
-    , app       = module.exports = express.createServer();
+    var express = require('express')
+      , graph   = require('fbgraph')
+      , app     = module.exports     = express.createServer();
 
     // this should really be in a config file!
     var conf = {
-      client_id:        'YOUR FACEBOOK APP ID'
+        client_id:      'YOUR FACEBOOK APP ID'
       , client_secret:  'YOU FACEBOOK APP SECRET'
       , scope:          'email, user_about_me, user_birthday, user_location, publish_stream'
       , redirect_uri:   'http://localhost:3000/auth/facebook'
@@ -170,7 +170,7 @@ After `authorizing` the app the user will be redirected to `/UserHasLoggedIn`
       // so we'll redirect to the oauth dialog
       if (!req.query.code) {
         var authUrl = graph.getOauthUrl({
-          "client_id":       conf.client_id
+            "client_id":     conf.client_id
           , "redirect_uri":  conf.redirect_uri
         });
 
@@ -182,7 +182,7 @@ After `authorizing` the app the user will be redirected to `/UserHasLoggedIn`
       // auth `code` is set
       // we'll send that and get the access token
       graph.authorize({
-        "client_id":        conf.client_id
+          "client_id":      conf.client_id
         , "redirect_uri":   conf.redirect_uri
         , "client_secret":  conf.client_secret
         , "code":           req.query.code

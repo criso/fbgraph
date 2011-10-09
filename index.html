@@ -15,8 +15,8 @@
 <p>I created this, because I wanted to access FB's graph from <code>node</code>. <br />
   The libraries I found, felt clunky to me, and I needed an excuse to create a node module.</p>
 
-<p>All calls will return <code>json</code>. Facebook sometimes (on friend requests, deleting test users, access token request) <br />
-  decides to just return a <code>string</code> or <code>true</code> or redirects directly to the image. I say <strong>nay-nay</strong>! Let's make it Disney, and keep things consistent! </p>
+<p>All calls will return <code>json</code>. Facebook sometimes decides to just return a <code>string</code> or <code>true</code> or redirects directly to the image. <br />
+  I say <strong>nay-nay</strong>! Let's make it Disney, and keep things consistent! </p>
 
 <h2>Installation via npm</h2>
 
@@ -57,6 +57,31 @@ graph.authorize({
   res.redirect('/loggedIn');
 });
 </code></pre>
+
+<h2>How requests are made</h2>
+
+<p>All calls are made using the <a href="https://github.com/mikeal/request">request</a>  nodejs module <br />
+<strong>Why?</strong> something to do with wheels and re-invention.  </p>
+
+<p>Request options are directly mapped and can be set like so:</p>
+
+<pre><code>var options = {
+    timeout:  3000
+  , pool:     { maxSockets:  Infinity }
+  , headers:  { connection:  "keep-alive" }
+};
+
+graph
+  .setOptions(options)
+  .get("zuck", function(err, res) {
+    console.log(res); // { id: '4', name: 'Mark Zuckerberg'... }
+  });
+</code></pre>
+
+<p>Possible options can be found on the <a href="https://github.com/mikeal/request">request github page</a>  </p>
+
+<p><code>followRedirect</code> cannot be overriden and has a default value of <code>false</code> <br />
+<code>encoding</code> will have <code>utf-8</code> as default if nothing is set  </p>
 
 <h2>Read data from the Graph Api</h2>
 

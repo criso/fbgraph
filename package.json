@@ -1,6 +1,6 @@
 {
   "name": "fbgraph",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "a cleaner client to access the facebook graph api",
   "keywords": [
     "facebook",
@@ -9,15 +9,17 @@
   ],
   "author": "Cristiano Oliveira <ocean.cris@gmail.com>",
   "main": "index",
-  "engines": {
-    "node": ">= 0.4.1"
+  "dependencies": {
+    "request": "2.1.x"
   },
-  "dependencies": {},
+  "devDependencies": {
+    "vows": "0.5.x"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/criso/fbgraph.git"
   },
-  "devDependencies": {
-    "vows": "0.5.x"
+  "engines": {
+    "node": ">= 0.4.1"
   }
 }

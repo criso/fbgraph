@@ -62,7 +62,7 @@ vows.describe("graph.test").addBatch({
         },
 
         "should return an api must be a string error": function (err, res) {
-          assert.equal(err.error, "Graph api url must be a string",
+          assert.equal(err.message, "Graph api url must be a string",
           "Should return an error if api url is not a string");
         }
       },

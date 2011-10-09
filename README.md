@@ -11,6 +11,9 @@
   All calls will return `json`. Facebook sometimes (on friend requests, deleting test users, access token request)   
   decides to just return a `string` or `true` or redirects directly to the image. I say __nay-nay__! Let's make it Disney, and keep things consistent! 
 
+  All calls will return `json`. Facebook sometimes decides to just return a `string` or `true` or redirects directly to the image.   
+  I say __nay-nay__! Let's make it Disney, and keep things consistent! 
+
 ## Installation via npm
     $ npm install fbgraph
 
@@ -51,7 +54,30 @@ More details below on the __express app__ section
     });
 ```
 
+## How requests are made
+All calls are made using the [request](https://github.com/mikeal/request)  nodejs module  
+__Why?__ something to do with wheels and re-invention.  
 
+Request options are directly mapped and can be set like so:
+
+```js
+var options = {
+    timeout:  3000
+  , pool:     { maxSockets:  Infinity }
+  , headers:  { connection:  "keep-alive" }
+};
+
+graph
+  .setOptions(options)
+  .get("zuck", function(err, res) {
+    console.log(res); // { id: '4', name: 'Mark Zuckerberg'... }
+  });
+```
+
+Possible options can be found on the [request github page](https://github.com/mikeal/request)  
+
+`followRedirect` cannot be overriden and has a default value of `false`  
+`encoding` will have `utf-8` as default if nothing is set  
 
 ## Read data from the Graph Api
 
@@ -79,8 +105,8 @@ graph.get("zuck", params,  function(err, res) {
 });
 ```
 
-GraphApi calls that redirect directly to an image
-will return a json response with relevant fields
+GraphApi calls that __redirect__ directly to an image
+will return a `json` response with relevant fields
 
 ```js
 graph.get("/zuck/picture", function(err, res) {

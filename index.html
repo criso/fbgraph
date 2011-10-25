@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FBGraph - Stay classy facebook</title>
+    <title>FBGraph - Stay Classy Facebook</title>
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <div id="content">
-<h1>It's the Facebook Graph, Bro!</h1>
+<h1>Stay Classy, Facebook</h1>
 
 <p><a href="http://github.com/criso/fbgraph">FBgraph</a> is a nodejs module that provides easy access to the facebook graph api</p>
 
@@ -152,10 +152,41 @@ graph.post(userId + "/feed", wallPost, function(err, res) {
 <h2>Delete a Graph object</h2>
 
 <p>To delete a graph object, provide an <code>object id</code> and the 
-response will return <code>true</code> or <code>false</code></p>
+response will return <code>{data: true}</code> or <code>{data:false}</code></p>
 
 <pre><code>graph.del(postID, function(err, res) {
-  console.log(res); // true/false
+  console.log(res); // {data:true}/{data:false}
+});
+</code></pre>
+
+<h2>Performing a FQL query</h2>
+
+<p>A single FQL query is done by sending a query as a string</p>
+
+<pre><code>var query = "SELECT name FROM user WHERE uid = me()";
+
+graph.fql(query, function(err, res) {
+  console.log(res); // { data: [ { name: 'Ricky Bobby' } ] }
+});
+</code></pre>
+
+<h2>Performing a FQL Multi-Query</h2>
+
+<p>FQL Multi-Queries are done by sending in an object containing the 
+separate queries</p>
+
+<pre><code>var query = {
+    name:         "SELECT name FROM user WHERE uid = me()"
+  , permissions:  "SELECT email, user_about_me, user_birthday FROM permissions WHERE uid = me()"
+
+};
+
+graph.fql(query, function(err, res) {
+  console.log(res);
+  // { data: [
+  //   { name: 'name', fql_result_set: [{name: 'Ricky Bobby'}] },
+  //   { name: 'permissions', fql_result_set: [{email: 1, user_about_me: 1...}] }
+  // ]}
 });
 </code></pre>
 

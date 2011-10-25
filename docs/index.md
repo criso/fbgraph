@@ -1,4 +1,4 @@
-# It's the Facebook Graph, Bro!
+# Stay Classy, Facebook
 
 [FBgraph](http://github.com/criso/fbgraph) is a nodejs module that provides easy access to the facebook graph api
 
@@ -134,10 +134,37 @@ Post a message on a `friend's` wall
 ## Delete a Graph object
 
 To delete a graph object, provide an `object id` and the 
-response will return `true` or `false`
+response will return `{data: true}` or `{data:false}`
 
     graph.del(postID, function(err, res) {
-      console.log(res); // true/false
+      console.log(res); // {data:true}/{data:false}
+    });
+
+## Performing a FQL query
+A single FQL query is done by sending a query as a string
+
+    var query = "SELECT name FROM user WHERE uid = me()";
+
+    graph.fql(query, function(err, res) {
+      console.log(res); // { data: [ { name: 'Ricky Bobby' } ] }
+    });
+
+## Performing a FQL Multi-Query
+FQL Multi-Queries are done by sending in an object containing the 
+separate queries
+
+    var query = {
+        name:         "SELECT name FROM user WHERE uid = me()"
+      , permissions:  "SELECT email, user_about_me, user_birthday FROM permissions WHERE uid = me()"
+
+    };
+
+    graph.fql(query, function(err, res) {
+      console.log(res);
+      // { data: [
+      //   { name: 'name', fql_result_set: [{name: 'Ricky Bobby'}] },
+      //   { name: 'permissions', fql_result_set: [{email: 1, user_about_me: 1...}] }
+      // ]}
     });
 
 ## Rockin' it on an Express App

@@ -163,6 +163,9 @@ graph.del(postID, function(err, res) {
 ```
 
 ## Performing a FQL query
+
+A single FQL query is done by sending a query as a string
+
 ```js
 var query = "SELECT name FROM user WHERE uid = me()";
 
@@ -172,6 +175,9 @@ graph.fql(query, function(err, res) {
 ```
 
 ## Performing a FQL Multi-Query
+
+FQL Multi-Queries are done by sending in an object containing the separate queries
+
 ```js
 var query = {
     name:         "SELECT name FROM user WHERE uid = me()"

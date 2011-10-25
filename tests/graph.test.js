@@ -6,7 +6,14 @@ var graph    = require("../index")
 
 
 var testUser1      = {}
-  , appAccessToken = FBConfig.appId + "|" + FBConfig.appSecret;
+  , appAccessToken = FBConfig.appId + "|" + FBConfig.appSecret
+  , testUserParams = {
+      installed:     true
+    , name:          "Ricky Bobby"
+    , permissions:   FBConfig.scope
+    , method:        "post"
+    , access_token:  appAccessToken
+  };
 
 
 vows.describe("graph.test").addBatch({
@@ -121,15 +128,8 @@ vows.describe("graph.test").addBatch({
 
         // create test user
         var testUserUrl = FBConfig.appId + "/accounts/test-users";
-        var params = {
-            installed:     true
-          , name:          "Ricky Bobby"
-          , permissions:   FBConfig.scope
-          , method:        "post"
-          , access_token:  appAccessToken
-        };
 
-        graph.get(testUserUrl, params, function(err, res) {
+        graph.get(testUserUrl, testUserParams, function(err, res) {
 
           if (!res || res.error
             && ~res.error.message.indexOf("Service temporarily unavailable")) {
@@ -205,6 +205,59 @@ vows.describe("graph.test").addBatch({
         "an *access token* required search should return valid data": function (err, res) {
           assert.isNull(err);
           assert.ok(res.data.length > 1, "response data should not be empty");
+        }
+      },
+
+      "and requesting a FQL query": {
+        topic: function () {
+          var query = "SELECT name FROM user WHERE uid = me()";
+
+          graph.fql(query, this.callback);    
+        },
+
+        "should return valid data": function (err, res) {
+          assert.isNull(err);
+          assert.include(res, 'data');
+          assert.isArray(res.data);
+          assert.equal(res.data[0].name, testUserParams.name);
+        }
+      },
+
+      "and requesting a FQL multi-query": {
+        topic: function () {
+          var query = {
+              name:         "SELECT name FROM user WHERE uid = me()"
+            , permissions:  "SELECT " + FBConfig.scope + " FROM permissions WHERE uid = me()"
+          };
+
+          graph.fql(query, this.callback);    
+        },
+
+        "should return valid data": function (err, res) {
+          assert.isNull(err);
+          assert.include(res, 'data');
+          assert.isArray(res.data);
+
+          var nameQuery  = {}
+            , permsQuery = {};
+        
+          if (res.data[0].name === 'name') {
+            nameQuery  = res.data[0];
+            permsQuery = res.data[1];
+          } else {
+            permsQuery = res.data[0];
+            nameQuery  = res.data[1];
+          }
+
+          assert.isArray(nameQuery.fql_result_set);
+          assert.isArray(permsQuery.fql_result_set);
+          assert.equal(nameQuery.fql_result_set[0].name, testUserParams.name);
+
+          var permissions = permsQuery.fql_result_set[0].permissions;
+
+          testUserParams.permissions.split(',').forEach(function(permission) {
+            assert.include(permissions, permission); 
+          });
         }
       }
     }

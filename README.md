@@ -256,16 +256,24 @@ app.get('/auth/facebook', function(req, res) {
     return;
   }
 
-  // code is set
-  // we'll send that and get the access token
-  graph.authorize({
-      "client_id":      conf.client_id
-    , "redirect_uri":   conf.redirect_uri
-    , "client_secret":  conf.client_secret
-    , "code":           req.query.code
-  }, function (err, facebookRes) {
-    res.redirect('/loggedIn');
-  });
+  // if the `user` hasn't denied the request
+  if (req.query.error) {
+
+    // code is set
+    // we'll send that and get the access token
+    graph.authorize({
+        "client_id":      conf.client_id
+      , "redirect_uri":   conf.redirect_uri
+      , "client_secret":  conf.client_secret
+      , "code":           req.query.code
+    }, function (err, facebookRes) {
+      res.redirect('/loggedIn');
+    });
+
+  } else {
+    // handle request denial here:
+    res.redirect('/');
+  }
 
 });
 

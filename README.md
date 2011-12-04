@@ -251,29 +251,25 @@ app.get('/auth/facebook', function(req, res) {
       , "redirect_uri":  conf.redirect_uri
     });
 
-    res.redirect(authUrl);
-
+    if (!req.query.error) { //checks whether a user denied the app facebook login/permissions
+      res.redirect(authUrl);
+    } else {  //req.query.error == 'access_denied'
+      res.send('access denied');
+    }
     return;
   }
 
-  // if the `user` hasn't denied the request
-  if (req.query.error) {
+  // code is set
+  // we'll send that and get the access token
+  graph.authorize({
+      "client_id":      conf.client_id
+    , "redirect_uri":   conf.redirect_uri
+    , "client_secret":  conf.client_secret
+    , "code":           req.query.code
+  }, function (err, facebookRes) {
+    res.redirect('/loggedIn');
+  });
 
-    // code is set
-    // we'll send that and get the access token
-    graph.authorize({
-        "client_id":      conf.client_id
-      , "redirect_uri":   conf.redirect_uri
-      , "client_secret":  conf.client_secret
-      , "code":           req.query.code
-    }, function (err, facebookRes) {
-      res.redirect('/loggedIn');
-    });
-
-  } else {
-    // handle request denial here:
-    res.redirect('/');
-  }
 
 });
 

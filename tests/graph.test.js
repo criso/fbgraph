@@ -29,7 +29,7 @@ vows.describe("graph.test").addBatch({
 }).addBatch({
   "When accessing the graphApi": {
     "with no *access token* ": {
-      "and searching for pulblic data via username": {
+      "and searching for public data via username": {
         topic: function() {
           graph.get("/btaylor", this.callback);
         },

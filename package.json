@@ -10,7 +10,8 @@
   "author": "Cristiano Oliveira <ocean.cris@gmail.com>",
   "main": "index",
   "dependencies": {
-    "request": "2.1.x"
+    "request": "2.1.x",
+    "qs": "0.5.x"
   },
   "devDependencies": {
     "vows": "0.5.x"

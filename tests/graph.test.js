@@ -22,13 +22,27 @@ vows.describe("graph.test").addBatch({
       return graph.setAccessToken(null);
     },
 
-    "*access token* should be null": function (graph) {
+    "*Access Token* should be null": function (graph) {
       assert.isNull(graph.getAccessToken());
+    },
+
+    "should be able to set *request* options": function (graph) {
+      var options = {
+          timeout:  30000
+        , pool:     false
+        , headers:  { connection:  "keep-alive" }
+      };
+
+      graph.setOptions(options);
+      assert.equal(graph.getOptions(), options);
+
+      // reset
+      graph.setOptions({});
     }
   }
 }).addBatch({
   "When accessing the graphApi": {
-    "with no *access token* ": {
+    "with no *Access Token** ": {
       "and searching for public data via username": {
         topic: function() {
           graph.get("/btaylor", this.callback);
@@ -49,17 +63,6 @@ vows.describe("graph.test").addBatch({
 
         "should return an error": function (err, res) {
           assert.include(res, "error");
-        }
-      },
-
-      "and using an empty api url": {
-        topic: function() {
-          graph.get("", this.callback);
-        },
-
-        "should return an empty object": function (err, res) {
-          assert.isNull(err);
-          assert.isEmpty(res.data);
         }
       },
 
@@ -202,7 +205,7 @@ vows.describe("graph.test").addBatch({
           graph.search(searchOptions, this.callback);
         },
 
-        "an *access token* required search should return valid data": function (err, res) {
+        "an *Access Token* required search should return valid data": function (err, res) {
           assert.isNull(err);
           assert.ok(res.data.length > 1, "response data should not be empty");
         }
@@ -253,9 +256,10 @@ vows.describe("graph.test").addBatch({
           assert.isArray(permsQuery.fql_result_set);
           assert.equal(nameQuery.fql_result_set[0].name, testUserParams.name);
 
-          var permissions = permsQuery.fql_result_set[0].permissions;
+          console.dir(permsQuery.fql_result_set);
+          var permissions = permsQuery.fql_result_set[0];
 
-          testUserParams.permissions.split(',').forEach(function(permission) {
+          testUserParams.permissions.split(', ').forEach(function(permission) {
             assert.include(permissions, permission); 
           });
         }

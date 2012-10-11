@@ -96,6 +96,17 @@ vows.describe("graph.test").addBatch({
         }
       },
 
+      "and requesting an api url with prefixed graphurl": {
+        topic: function() {
+          graph.get(graph.getGraphUrl() + "/zuck/picture");
+        },
+
+        "should be able to get valid data": function (err, res) {
+          assert.include(res, "image");
+          assert.include(res, "location");
+        }
+      },
+
       "and trying to access data that requires an access token": {
         topic: function () {
           graph.get("/817129783203", this.callback);

@@ -98,7 +98,7 @@ vows.describe("graph.test").addBatch({
 
       "and requesting an api url with prefixed graphurl": {
         topic: function() {
-          graph.get(graph.getGraphUrl() + "/zuck/picture");
+          graph.get(graph.getGraphUrl() + "/zuck/picture", this.callback);
         },
 
         "should be able to get valid data": function (err, res) {

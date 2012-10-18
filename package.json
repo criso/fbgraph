@@ -1,6 +1,6 @@
 {
   "name": "fbgraph",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "a cleaner client to access the facebook graph api",
   "keywords": [
     "facebook",

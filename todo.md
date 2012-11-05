@@ -1,4 +1,0 @@
-- Finish setting up gh-page
-	- write docs
-	- alter css, so that it doesn't look like superagent
-  - alter links to point to correct place

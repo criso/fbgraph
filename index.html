@@ -1,22 +1,44 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FBGraph - Stay Classy Facebook</title>
-    <link rel="stylesheet" href="css/style.css">
-  </head>
-  <body>
-    <div id="content">
-<h1>Stay Classy, Facebook</h1>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
-<p><a href="http://github.com/criso/fbgraph">FBgraph</a> is a nodejs module that provides easy access to the facebook graph api</p>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Fbgraph by criso</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Fbgraph</h1>
+        <h2>NodeJs lib to access the facebook graph api</h2>
+        <a href="https://github.com/criso/fbgraph" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Stay Classy, Facebook</h1>
+
+<p><a href="http://criso.github.com/fbgraph/">FBgraph</a> is a nodejs module that provides easy access to the facebook graph api</p>
 
 <h2>Oh nooooooesss - MOAR facebook</h2>
 
-<p>I created this, because I wanted to access FB's graph from <code>node</code>. <br />
-  The libraries I found, felt clunky to me, and I needed an excuse to create a node module.</p>
+<p>I created this because I wanted to access FB's graph from <code>node</code>.<br>
+  The libraries I found, felt clunky to me, and I needed an excuse to create a node module.  </p>
 
-<p>All calls will return <code>json</code>. Facebook sometimes decides to just return a <code>string</code> or <code>true</code> or redirects directly to the image. <br />
-  I say <strong>nay-nay</strong>! Let's make it Disney, and keep things consistent! </p>
+<p>All calls will return <code>json</code>. Facebook sometimes (on friend requests, deleting test users, access token request)<br>
+  decides to just return a <code>string</code> or <code>true</code> or redirects directly to the image. I say <strong>nay-nay</strong>! Let's make it Disney, and keep things consistent! </p>
 
 <h2>Installation via npm</h2>
 
@@ -28,105 +50,103 @@ var graph = require('fbgraph');
 <h2>Authentication</h2>
 
 <p>If you get an accesstoken via some other Oauth module like <a href="https://github.com/bnoguchi/everyauth">everyauth</a> , 
-<a href="https://github.com/ciaranj/connect-auth">connect-auth</a> or <a href="https://github.com/ciaranj/node-oauth">node-oauth</a> you can just set <br />
+<a href="https://github.com/ciaranj/connect-auth">connect-auth</a> or <a href="https://github.com/ciaranj/node-oauth">node-oauth</a> you can just set<br>
 the access token directly. Most <code>get</code> calls, and pretty much all <code>post</code> calls will require an <code>access_token</code></p>
 
-<pre><code>graph.setAccessToken(access_token);
-</code></pre>
+<div class="highlight"><pre>    <span class="nx">graph</span><span class="p">.</span><span class="nx">setAccessToken</span><span class="p">(</span><span class="nx">access_token</span><span class="p">);</span>
+</pre></div>
 
 <p>This is how you would get authenticated using only the <code>fbgraph</code> module.
 More details below on the <strong>express app</strong> section</p>
 
-<pre><code>// get authorization url
-var authUrl = graph.getOauthUrl({
-    "client_id":     conf.client_id
-  , "redirect_uri":  conf.redirect_uri
-});
+<div class="highlight"><pre>    <span class="c1">// get authorization url</span>
+    <span class="kd">var</span> <span class="nx">authUrl</span> <span class="o">=</span> <span class="nx">graph</span><span class="p">.</span><span class="nx">getOauthUrl</span><span class="p">({</span>
+        <span class="s2">"client_id"</span><span class="o">:</span>     <span class="nx">conf</span><span class="p">.</span><span class="nx">client_id</span>
+      <span class="p">,</span> <span class="s2">"redirect_uri"</span><span class="o">:</span>  <span class="nx">conf</span><span class="p">.</span><span class="nx">redirect_uri</span>
+    <span class="p">});</span>
 
-// shows dialog
-res.redirect(authUrl);
+    <span class="c1">// shows dialog</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="nx">authUrl</span><span class="p">);</span>
 
-// after user click, auth `code` will be set
-// we'll send that and get the access token
-graph.authorize({
-    "client_id":      conf.client_id
-  , "redirect_uri":   conf.redirect_uri
-  , "client_secret":  conf.client_secret
-  , "code":           req.query.code
-}, function (err, facebookRes) {
-  res.redirect('/loggedIn');
-});
-</code></pre>
+    <span class="c1">// after user click, auth `code` will be set</span>
+    <span class="c1">// we'll send that and get the access token</span>
+    <span class="nx">graph</span><span class="p">.</span><span class="nx">authorize</span><span class="p">({</span>
+        <span class="s2">"client_id"</span><span class="o">:</span>      <span class="nx">conf</span><span class="p">.</span><span class="nx">client_id</span>
+      <span class="p">,</span> <span class="s2">"redirect_uri"</span><span class="o">:</span>   <span class="nx">conf</span><span class="p">.</span><span class="nx">redirect_uri</span>
+      <span class="p">,</span> <span class="s2">"client_secret"</span><span class="o">:</span>  <span class="nx">conf</span><span class="p">.</span><span class="nx">client_secret</span>
+      <span class="p">,</span> <span class="s2">"code"</span><span class="o">:</span>           <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">code</span>
+    <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">facebookRes</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">'/loggedIn'</span><span class="p">);</span>
+    <span class="p">});</span>
+</pre></div>
 
 <h2>How requests are made</h2>
 
-<p>All calls are made using the <a href="https://github.com/mikeal/request">request</a>  nodejs module <br />
-<strong>Why?</strong> something to do with wheels and re-invention.  </p>
+<p>All calls are made using the <a href="https://github.com/mikeal/request">request</a>  nodejs module<br><strong>Why?</strong> something to do with wheels and re-invention.  </p>
 
 <p>Request options are directly mapped and can be set like so:</p>
 
-<pre><code>var options = {
-    timeout:  3000
-  , pool:     { maxSockets:  Infinity }
-  , headers:  { connection:  "keep-alive" }
-};
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">timeout</span><span class="o">:</span>  <span class="mi">3000</span>
+  <span class="p">,</span> <span class="nx">pool</span><span class="o">:</span>     <span class="p">{</span> <span class="nx">maxSockets</span><span class="o">:</span>  <span class="kc">Infinity</span> <span class="p">}</span>
+  <span class="p">,</span> <span class="nx">headers</span><span class="o">:</span>  <span class="p">{</span> <span class="nx">connection</span><span class="o">:</span>  <span class="s2">"keep-alive"</span> <span class="p">}</span>
+<span class="p">};</span>
 
-graph
-  .setOptions(options)
-  .get("zuck", function(err, res) {
-    console.log(res); // { id: '4', name: 'Mark Zuckerberg'... }
-  });
-</code></pre>
+<span class="nx">graph</span>
+  <span class="p">.</span><span class="nx">setOptions</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"zuck"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { id: '4', name: 'Mark Zuckerberg'... }</span>
+  <span class="p">});</span>
+</pre></div>
 
 <p>Possible options can be found on the <a href="https://github.com/mikeal/request">request github page</a>  </p>
 
-<p><code>followRedirect</code> cannot be overriden and has a default value of <code>false</code> <br />
-<code>encoding</code> will have <code>utf-8</code> as default if nothing is set  </p>
+<p><code>followRedirect</code> cannot be overriden and has a default value of <code>false</code><br><code>encoding</code> will have <code>utf-8</code> as default if nothing is set  </p>
 
 <h2>Read data from the Graph Api</h2>
 
-<pre><code>graph.get("zuck", function(err, res) {
-  console.log(res); // { id: '4', name: 'Mark Zuckerberg'... }
-});
-</code></pre>
+<div class="highlight"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"zuck"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { id: '4', name: 'Mark Zuckerberg'... }</span>
+<span class="p">});</span>
+</pre></div>
 
 <p>params in the <code>url</code></p>
 
-<pre><code>graph.get("zuck?fields=picture", function(err, res) {
-  console.log(res); // { picture: 'http://profile.ak.fbcdn.net/'... }
-});
-</code></pre>
+<div class="highlight"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"zuck?fields=picture"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { picture: 'http://profile.ak.fbcdn.net/'... }</span>
+<span class="p">});</span>
+</pre></div>
 
 <p>params as an <code>object</code></p>
 
-<pre><code>var params = { fields: picture };
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">fields</span><span class="o">:</span> <span class="nx">picture</span> <span class="p">};</span>
 
-graph.get("zuck", params,  function(err, res) {
-  console.log(res); // { picture: "http://profile.ak.fbcdn.net/..." }
-});
-</code></pre>
+<span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"zuck"</span><span class="p">,</span> <span class="nx">params</span><span class="p">,</span>  <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { picture: "http://profile.ak.fbcdn.net/..." }</span>
+<span class="p">});</span>
+</pre></div>
 
-<p>GraphApi calls that redirect directly to an image
-will return a json response with relevant fields</p>
+<p>GraphApi calls that <strong>redirect</strong> directly to an image
+will return a <code>json</code> response with relevant fields</p>
 
-<pre><code>graph.get("/zuck/picture", function(err, res) {
-  console.log(res); // { image: true, location: "http://profile.ak.fb..." }
-});
-</code></pre>
+<div class="highlight"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"/zuck/picture"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { image: true, location: "http://profile.ak.fb..." }</span>
+<span class="p">});</span>
+</pre></div>
 
 <h2>Search data from the Graph Api</h2>
 
 <p>Search for public posts that contain <strong>brogramming</strong></p>
 
-<pre><code>var searchOptions = {
-    q:     "brogramming"
-  , type:  "post"
-};
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">searchOptions</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">q</span><span class="o">:</span>     <span class="s2">"brogramming"</span>
+  <span class="p">,</span> <span class="nx">type</span><span class="o">:</span>  <span class="s2">"post"</span>
+<span class="p">};</span>
 
-graph.search(searchOptions, function(err, res) {
-  console.log(res); // {data: [{id: xxx, from: ...}, {id: xxx, from: ...}]}
-});
-</code></pre>
+<span class="nx">graph</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">searchOptions</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// {data: [{id: xxx, from: ...}, {id: xxx, from: ...}]}</span>
+<span class="p">});</span>
+</pre></div>
 
 <h2>Publish data to the Graph Api</h2>
 
@@ -134,160 +154,156 @@ graph.search(searchOptions, function(err, res) {
 
 <p>only needs to be set once</p>
 
-<pre><code>graph.setAccessToken(accessToken);
-</code></pre>
+<div class="highlight"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">setAccessToken</span><span class="p">(</span><span class="nx">accessToken</span><span class="p">);</span>
+</pre></div>
 
 <p>Post a message on a <code>friend's</code> wall</p>
 
-<pre><code>var wallPost = {
-  message: "I'm gonna come at you like a spider monkey, chip!"
-};
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">wallPost</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">message</span><span class="o">:</span> <span class="s2">"I'm gonna come at you like a spider monkey, chip!"</span>
+<span class="p">};</span>
 
-graph.post(userId + "/feed", wallPost, function(err, res) {
-  // returns the post id
-  console.log(res); // { id: xxxxx}
-});
-</code></pre>
+<span class="nx">graph</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">userId</span> <span class="o">+</span> <span class="s2">"/feed"</span><span class="p">,</span> <span class="nx">wallPost</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// returns the post id</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { id: xxxxx}</span>
+<span class="p">});</span>
+</pre></div>
 
 <h2>Delete a Graph object</h2>
 
 <p>To delete a graph object, provide an <code>object id</code> and the 
 response will return <code>{data: true}</code> or <code>{data:false}</code></p>
 
-<pre><code>graph.del(postID, function(err, res) {
-  console.log(res); // {data:true}/{data:false}
-});
-</code></pre>
+<div class="highlight"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">del</span><span class="p">(</span><span class="nx">postID</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// {data:true}/{data:false}</span>
+<span class="p">});</span>
+</pre></div>
 
 <h2>Performing a FQL query</h2>
 
 <p>A single FQL query is done by sending a query as a string</p>
 
-<pre><code>var query = "SELECT name FROM user WHERE uid = me()";
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="s2">"SELECT name FROM user WHERE uid = me()"</span><span class="p">;</span>
 
-graph.fql(query, function(err, res) {
-  console.log(res); // { data: [ { name: 'Ricky Bobby' } ] }
-});
-</code></pre>
+<span class="nx">graph</span><span class="p">.</span><span class="nx">fql</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { data: [ { name: 'Ricky Bobby' } ] }</span>
+<span class="p">});</span>
+</pre></div>
 
 <h2>Performing a FQL Multi-Query</h2>
 
-<p>FQL Multi-Queries are done by sending in an object containing the 
-separate queries</p>
+<p>FQL Multi-Queries are done by sending in an object containing the separate queries</p>
 
-<pre><code>var query = {
-    name:         "SELECT name FROM user WHERE uid = me()"
-  , permissions:  "SELECT email, user_about_me, user_birthday FROM permissions WHERE uid = me()"
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="o">:</span>         <span class="s2">"SELECT name FROM user WHERE uid = me()"</span>
+  <span class="p">,</span> <span class="nx">permissions</span><span class="o">:</span>  <span class="s2">"SELECT email, user_about_me, user_birthday FROM permissions WHERE uid = me()"</span>
+<span class="p">};</span>
 
-};
-
-graph.fql(query, function(err, res) {
-  console.log(res);
-  // { data: [
-  //   { name: 'name', fql_result_set: [{name: 'Ricky Bobby'}] },
-  //   { name: 'permissions', fql_result_set: [{email: 1, user_about_me: 1...}] }
-  // ]}
-});
-</code></pre>
+<span class="nx">graph</span><span class="p">.</span><span class="nx">fql</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+  <span class="c1">// { data: [</span>
+  <span class="c1">//   { name: 'name', fql_result_set: [{name: 'Ricky Bobby'}] },</span>
+  <span class="c1">//   { name: 'permissions', fql_result_set: [{email: 1, user_about_me: 1...}] }</span>
+  <span class="c1">// ]}</span>
+<span class="p">});</span>
+</pre></div>
 
 <h2>Rockin' it on an Express App</h2>
 
-<p>This example assumes that you have a link on the main page <code>/</code> that points to <code>/auth/facebook</code>. <br />
-The user will click this link and get into the facebook authorization flow ( if the user hasn't already connected) <br />
+<p>This example assumes that you have a link on the main page <code>/</code> that points to <code>/auth/facebook</code>.<br>
+The user will click this link and get into the facebook authorization flow ( if the user hasn't already connected)<br>
 After <code>authorizing</code> the app the user will be redirected to <code>/UserHasLoggedIn</code>  </p>
 
-<pre><code>/**
- * Module dependencies.
- */
+<div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * Module dependencies.</span>
+<span class="cm"> */</span>
 
-var express = require('express')
-  , graph   = require('fbgraph')
-  , app     = module.exports     = express.createServer();
+<span class="kd">var</span> <span class="nx">express</span>   <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'express'</span><span class="p">)</span>
+  <span class="p">,</span> <span class="nx">graph</span>     <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'fbgraph'</span><span class="p">)</span>
+  <span class="p">,</span> <span class="nx">app</span>       <span class="o">=</span> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">express</span><span class="p">.</span><span class="nx">createServer</span><span class="p">();</span>
 
-// this should really be in a config file!
-var conf = {
-    client_id:      'YOUR FACEBOOK APP ID'
-  , client_secret:  'YOU FACEBOOK APP SECRET'
-  , scope:          'email, user_about_me, user_birthday, user_location, publish_stream'
-  , redirect_uri:   'http://localhost:3000/auth/facebook'
-};
+<span class="c1">// this should really be in a config file!</span>
+<span class="kd">var</span> <span class="nx">conf</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">client_id</span><span class="o">:</span>      <span class="s1">'YOUR FACEBOOK APP ID'</span>
+  <span class="p">,</span> <span class="nx">client_secret</span><span class="o">:</span>  <span class="s1">'YOU FACEBOOK APP SECRET'</span>
+  <span class="p">,</span> <span class="nx">scope</span><span class="o">:</span>          <span class="s1">'email, user_about_me, user_birthday, user_location, publish_stream'</span>
+  <span class="p">,</span> <span class="nx">redirect_uri</span><span class="o">:</span>   <span class="s1">'http://localhost:3000/auth/facebook'</span>
+<span class="p">};</span>
 
-// Configuration
+<span class="c1">// Configuration</span>
 
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
-});
+<span class="nx">app</span><span class="p">.</span><span class="nx">configure</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">'views'</span><span class="p">,</span> <span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">'/views'</span><span class="p">);</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">'view engine'</span><span class="p">,</span> <span class="s1">'jade'</span><span class="p">);</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">bodyParser</span><span class="p">());</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">methodOverride</span><span class="p">());</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">app</span><span class="p">.</span><span class="nx">router</span><span class="p">);</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">'/public'</span><span class="p">));</span>
+<span class="p">});</span>
 
-app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
-});
+<span class="nx">app</span><span class="p">.</span><span class="nx">configure</span><span class="p">(</span><span class="s1">'development'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">errorHandler</span><span class="p">({</span> <span class="nx">dumpExceptions</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">showStack</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}));</span> 
+<span class="p">});</span>
 
-app.configure('production', function(){
-  app.use(express.errorHandler());
-});
+<span class="nx">app</span><span class="p">.</span><span class="nx">configure</span><span class="p">(</span><span class="s1">'production'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">errorHandler</span><span class="p">());</span>
+<span class="p">});</span>
 
-// Routes
+<span class="c1">// Routes</span>
 
-app.get('/', function(req, res){
-  res.render("index", { title: "click link to connect" });
-});
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">){</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s2">"index"</span><span class="p">,</span> <span class="p">{</span> <span class="nx">title</span><span class="o">:</span> <span class="s2">"click link to connect"</span> <span class="p">});</span>
+<span class="p">});</span>
 
-app.get('/auth/facebook', function(req, res) {
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/auth/facebook'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
 
-  // we don't have a code yet
-  // so we'll redirect to the oauth dialog
-  if (!req.query.code) {
-    var authUrl = graph.getOauthUrl({
-        "client_id":     conf.client_id
-      , "redirect_uri":  conf.redirect_uri
-    });
+  <span class="c1">// we don't have a code yet</span>
+  <span class="c1">// so we'll redirect to the oauth dialog</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">code</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">authUrl</span> <span class="o">=</span> <span class="nx">graph</span><span class="p">.</span><span class="nx">getOauthUrl</span><span class="p">({</span>
+        <span class="s2">"client_id"</span><span class="o">:</span>     <span class="nx">conf</span><span class="p">.</span><span class="nx">client_id</span>
+      <span class="p">,</span> <span class="s2">"redirect_uri"</span><span class="o">:</span>  <span class="nx">conf</span><span class="p">.</span><span class="nx">redirect_uri</span>
+    <span class="p">});</span>
 
-    res.redirect(authUrl);
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//checks whether a user denied the app facebook login/permissions</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="nx">authUrl</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  <span class="c1">//req.query.error == 'access_denied'</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">'access denied'</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
 
-    return;
-  }
-
-  // if the `user` hasn't denied the request
-  if (req.query.error) {
-
-    // auth `code` is set
-    // we'll send that and get the access token
-    graph.authorize({
-        "client_id":      conf.client_id
-      , "redirect_uri":   conf.redirect_uri
-      , "client_secret":  conf.client_secret
-      , "code":           req.query.code
-    }, function (err, facebookRes) {
-      res.redirect('/loggedIn');
-    });
-
-  } else {
-    // handle request denial here:
-    res.redirect('/');
-  }
-
-});
-
-// user gets sent here after being authorized
-app.get('/UserHasLoggedIn', function(req, res) {
-  res.render("index", { title: "Logged In" });
-});
+  <span class="c1">// code is set</span>
+  <span class="c1">// we'll send that and get the access token</span>
+  <span class="nx">graph</span><span class="p">.</span><span class="nx">authorize</span><span class="p">({</span>
+      <span class="s2">"client_id"</span><span class="o">:</span>      <span class="nx">conf</span><span class="p">.</span><span class="nx">client_id</span>
+    <span class="p">,</span> <span class="s2">"redirect_uri"</span><span class="o">:</span>   <span class="nx">conf</span><span class="p">.</span><span class="nx">redirect_uri</span>
+    <span class="p">,</span> <span class="s2">"client_secret"</span><span class="o">:</span>  <span class="nx">conf</span><span class="p">.</span><span class="nx">client_secret</span>
+    <span class="p">,</span> <span class="s2">"code"</span><span class="o">:</span>           <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">code</span>
+  <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">facebookRes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">'/loggedIn'</span><span class="p">);</span>
+  <span class="p">});</span>
 
 
-var port = process.env.PORT || 3000;
-app.listen(port, function() {
-  console.log("Express server listening on port %d", port);
-});
-</code></pre>
+<span class="p">});</span>
+
+
+<span class="c1">// user gets sent here after being authorized</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/UserHasLoggedIn'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s2">"index"</span><span class="p">,</span> <span class="p">{</span> <span class="nx">title</span><span class="o">:</span> <span class="s2">"Logged In"</span> <span class="p">});</span>
+<span class="p">});</span>
+
+
+<span class="kd">var</span> <span class="nx">port</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span> <span class="o">||</span> <span class="mi">3000</span><span class="p">;</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Express server listening on port %d"</span><span class="p">,</span> <span class="nx">port</span><span class="p">);</span>
+<span class="p">});</span>
+
+</pre></div>
 
 <h2>Running tests</h2>
 
-<p>Before running the test suite, add your Facebook <code>appId</code> and <code>appSecret</code> to <code>tests/config.js</code> <br />
+<p>Before running the test suite, add your Facebook <code>appId</code> and <code>appSecret</code> to <code>tests/config.js</code><br>
  This is needed to create <code>test users</code> and to get a test <code>access_token</code></p>
 
 <pre><code>$ npm install
@@ -295,11 +311,50 @@ $ make test
 </code></pre>
 
 <p><em>Tests might fail if the Facebook api has an issue.</em></p>
-	</div>
-	<a href="http://github.com/criso/fbgraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
 
+<h2>License</h2>
 
-	<script src="js/hijs.js"></script>
-	
+<p>(The MIT License)</p>
+
+<p>Copyright (c) 2011 Cristiano Oliveira &lt;<a href="mailto:ocean.cris@gmail.com">ocean.cris@gmail.com</a>&gt;</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/criso/fbgraph/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/criso/fbgraph/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/criso/fbgraph"></a> is maintained by <a href="https://github.com/criso">criso</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
   </body>
 </html>

@@ -247,6 +247,7 @@ app.get('/auth/facebook', function(req, res) {
     var authUrl = graph.getOauthUrl({
         "client_id":     conf.client_id
       , "redirect_uri":  conf.redirect_uri
+      , "scope":         conf.scope
     });
 
     if (!req.query.error) { //checks whether a user denied the app facebook login/permissions
@@ -265,7 +266,7 @@ app.get('/auth/facebook', function(req, res) {
     , "client_secret":  conf.client_secret
     , "code":           req.query.code
   }, function (err, facebookRes) {
-    res.redirect('/loggedIn');
+    res.redirect('/UserHasLoggedIn');
   });
 
 

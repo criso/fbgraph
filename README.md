@@ -96,7 +96,7 @@ graph.get("zuck?fields=picture", function(err, res) {
 params as an `object`
 
 ```js
-var params = { fields: picture };
+var params = { fields: "picture" };
 
 graph.get("zuck", params,  function(err, res) {
   console.log(res); // { picture: "http://profile.ak.fbcdn.net/..." }

@@ -52,6 +52,19 @@ More details below on the __express app__ section
     });
 ```
 
+## Extending access token expiration time
+
+If you want to [extend the expiration time](http://developers.facebook.com/docs/facebook-login/access-tokens/#extending) of your short-living access token, you may use `extendAccessToken` method as it is shown below:
+
+```js  
+    // extending access token
+    graph.extendAccessToken({
+        "client_id":      conf.client_id
+      , "client_secret":  conf.client_secret
+    });
+```
+
+
 ## How requests are made
 All calls are made using the [request](https://github.com/mikeal/request)  nodejs module  
 __Why?__ something to do with wheels and re-invention.  

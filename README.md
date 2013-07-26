@@ -61,6 +61,8 @@ If you want to [extend the expiration time](http://developers.facebook.com/docs/
     graph.extendAccessToken({
         "client_id":      conf.client_id
       , "client_secret":  conf.client_secret
+    }, function (err, facebookRes) {
+       console.log(facebookRes);
     });
 ```
 

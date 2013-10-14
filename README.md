@@ -5,11 +5,11 @@
 
 ## Oh nooooooesss - MOAR facebook
 
-  I created this because I wanted to access FB's graph from `node`.  
-  The libraries I found, felt clunky to me, and I needed an excuse to create a node module.  
+  I created this because I wanted to access FB's graph from `node`.
+  The libraries I found, felt clunky to me, and I needed an excuse to create a node module.
 
-  All calls will return `json`. Facebook sometimes (on friend requests, deleting test users, access token request)   
-  decides to just return a `string` or `true` or redirects directly to the image. I say __nay-nay__! Let's make it Disney, and keep things consistent! 
+  All calls will return `json`. Facebook sometimes (on friend requests, deleting test users, access token request)
+  decides to just return a `string` or `true` or redirects directly to the image. I say __nay-nay__! Let's make it Disney, and keep things consistent!
 
 
 ## Installation via npm
@@ -19,8 +19,8 @@
 
 ## Authentication
 
-If you get an accesstoken via some other Oauth module like [everyauth](https://github.com/bnoguchi/everyauth) , 
-[connect-auth](https://github.com/ciaranj/connect-auth) or [node-oauth](https://github.com/ciaranj/node-oauth) you can just set  
+If you get an accesstoken via some other Oauth module like [everyauth](https://github.com/bnoguchi/everyauth) ,
+[connect-auth](https://github.com/ciaranj/connect-auth) or [node-oauth](https://github.com/ciaranj/node-oauth) you can just set
 the access token directly. Most `get` calls, and pretty much all `post` calls will require an `access_token`
 
 ```js
@@ -56,7 +56,7 @@ More details below on the __express app__ section
 
 If you want to [extend the expiration time](http://developers.facebook.com/docs/facebook-login/access-tokens/#extending) of your short-living access token, you may use `extendAccessToken` method as it is shown below:
 
-```js  
+```js
     // extending access token
     graph.extendAccessToken({
         "client_id":      conf.client_id
@@ -68,8 +68,8 @@ If you want to [extend the expiration time](http://developers.facebook.com/docs/
 
 
 ## How requests are made
-All calls are made using the [request](https://github.com/mikeal/request)  nodejs module  
-__Why?__ something to do with wheels and re-invention.  
+All calls are made using the [request](https://github.com/mikeal/request)  nodejs module
+__Why?__ something to do with wheels and re-invention.
 
 Request options are directly mapped and can be set like so:
 
@@ -87,10 +87,26 @@ graph
   });
 ```
 
-Possible options can be found on the [request github page](https://github.com/mikeal/request)  
+Possible options can be found on the [request github page](https://github.com/mikeal/request)
 
-`followRedirect` cannot be overriden and has a default value of `false`  
-`encoding` will have `utf-8` as default if nothing is set  
+`followRedirect` cannot be overriden and has a default value of `false`
+`encoding` will have `utf-8` as default if nothing is set
+
+### Pagination
+Pagination in Facebook is done either with a `cursor` or a `next` url to call.
+To simplify the fbgraph API, it's possible to use a fully constructed URL in order to get
+the next page. See the following example:
+
+```js
+// note: you might want to prevent the callback hell :)
+graph.get('likes', {limit: 2, access_token: "foobar"}, function(err, res) {
+  if(res.paging && res.paging.next) {
+    graph.get(res.paging.next, function(err, res) {
+      // page 2
+    });
+  }
+});
+```
 
 ## Read data from the Graph Api
 
@@ -166,7 +182,7 @@ graph.post(userId + "/feed", wallPost, function(err, res) {
 
 ## Delete a Graph object
 
-To delete a graph object, provide an `object id` and the 
+To delete a graph object, provide an `object id` and the
 response will return `{data: true}` or `{data:false}`
 
 ```js
@@ -208,9 +224,9 @@ graph.fql(query, function(err, res) {
 
 ## Rockin' it on an Express App
 
-This example assumes that you have a link on the main page `/` that points to `/auth/facebook`.   
-The user will click this link and get into the facebook authorization flow ( if the user hasn't already connected)  
-After `authorizing` the app the user will be redirected to `/UserHasLoggedIn`  
+This example assumes that you have a link on the main page `/` that points to `/auth/facebook`.
+The user will click this link and get into the facebook authorization flow ( if the user hasn't already connected)
+After `authorizing` the app the user will be redirected to `/UserHasLoggedIn`
 
 ```js
 /**
@@ -241,7 +257,7 @@ app.configure(function(){
 });
 
 app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.configure('production', function(){
@@ -303,7 +319,7 @@ app.listen(port, function() {
 
 ## Running tests
 
- Before running the test suite, add your Facebook `appId` and `appSecret` to `tests/config.js`   
+ Before running the test suite, add your Facebook `appId` and `appSecret` to `tests/config.js`
  This is needed to create `test users` and to get a test `access_token`
 
     $ npm install

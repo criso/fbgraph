@@ -80,7 +80,7 @@ If you want to [extend the expiration time](http://developers.facebook.com/docs/
 
     // extending specific access token
     graph.extendAccessToken({
-        "accessToken":    client_access_token
+        "access_token":    client_access_token
       , "client_id":      conf.client_id
       , "client_secret":  conf.client_secret
     }, function (err, facebookRes) {

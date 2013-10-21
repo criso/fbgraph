@@ -4,7 +4,6 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="icon" type="image/x-icon" href="/favicon.png">
     <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
@@ -29,38 +28,56 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h1>Stay Classy, Facebook</h1>
+          <h1>
+<a name="stay-classy-facebook" class="anchor" href="#stay-classy-facebook"><span class="octicon octicon-link"></span></a>Stay Classy, Facebook</h1>
 
 <p><a href="http://criso.github.com/fbgraph/">FBgraph</a> is a nodejs module that provides easy access to the facebook graph api</p>
 
-<h2>Oh nooooooesss - MOAR facebook</h2>
+<h2>
+<a name="oh-nooooooesss---moar-facebook" class="anchor" href="#oh-nooooooesss---moar-facebook"><span class="octicon octicon-link"></span></a>Oh nooooooesss - MOAR facebook</h2>
 
-<p>I created this because I wanted to access FB's graph from <code>node</code>.<br>
-  The libraries I found, felt clunky to me, and I needed an excuse to create a node module.  </p>
+<p>I created this because I wanted to access FB's graph from <code>node</code>.
+  The libraries I found, felt clunky to me, and I needed an excuse to create a node module.</p>
 
-<p>All calls will return <code>json</code>. Facebook sometimes (on friend requests, deleting test users, access token request)<br>
-  decides to just return a <code>string</code> or <code>true</code> or redirects directly to the image. I say <strong>nay-nay</strong>! Let's make it Disney, and keep things consistent! </p>
+<p>All calls will return <code>json</code>. Facebook sometimes (on friend requests, deleting test users, access token request)
+  decides to just return a <code>string</code> or <code>true</code> or redirects directly to the image. I say <strong>nay-nay</strong>! Let's make it Disney, and keep things consistent!</p>
 
-<h2>Installation via npm</h2>
+<h2>
+<a name="installation-via-npm" class="anchor" href="#installation-via-npm"><span class="octicon octicon-link"></span></a>Installation via npm</h2>
 
 <pre><code>$ npm install fbgraph
 
 var graph = require('fbgraph');
 </code></pre>
 
-<h2>Authentication</h2>
+<h2>
+<a name="authentication" class="anchor" href="#authentication"><span class="octicon octicon-link"></span></a>Authentication</h2>
 
-<p>If you get an accesstoken via some other Oauth module like <a href="https://github.com/bnoguchi/everyauth">everyauth</a> , 
-<a href="https://github.com/ciaranj/connect-auth">connect-auth</a> or <a href="https://github.com/ciaranj/node-oauth">node-oauth</a> you can just set<br>
+<p>If you get an accesstoken via some other Oauth module like <a href="https://github.com/bnoguchi/everyauth">everyauth</a> ,
+<a href="https://github.com/ciaranj/connect-auth">connect-auth</a> or <a href="https://github.com/ciaranj/node-oauth">node-oauth</a> you can just set
 the access token directly. Most <code>get</code> calls, and pretty much all <code>post</code> calls will require an <code>access_token</code></p>
 
-<div class="highlight"><pre>    <span class="nx">graph</span><span class="p">.</span><span class="nx">setAccessToken</span><span class="p">(</span><span class="nx">access_token</span><span class="p">);</span>
+<h3>
+<a name="static-access-token-used-on-all-calls" class="anchor" href="#static-access-token-used-on-all-calls"><span class="octicon octicon-link"></span></a>Static access token (used on all calls)</h3>
+
+<div class="highlight highlight-js"><pre>    <span class="nx">graph</span><span class="p">.</span><span class="nx">setAccessToken</span><span class="p">(</span><span class="nx">access_token</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="to-use-a-specific-access-token-for-a-particular-request" class="anchor" href="#to-use-a-specific-access-token-for-a-particular-request"><span class="octicon octicon-link"></span></a>To use a specific access token for a particular request</h3>
+
+<div class="highlight highlight-js"><pre>    <span class="c1">// pass it in as part of the url </span>
+    <span class="nx">graph</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">userId</span> <span class="o">+</span> <span class="s2">"/feed?access_token=007"</span><span class="p">,</span> <span class="nx">wallPost</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// returns the post id</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { id: xxxxx}</span>
+    <span class="p">});</span>
+
 </pre></div>
 
 <p>This is how you would get authenticated using only the <code>fbgraph</code> module.
 More details below on the <strong>express app</strong> section</p>
 
-<div class="highlight"><pre>    <span class="c1">// get authorization url</span>
+<div class="highlight highlight-js"><pre>    <span class="c1">// get authorization url</span>
     <span class="kd">var</span> <span class="nx">authUrl</span> <span class="o">=</span> <span class="nx">graph</span><span class="p">.</span><span class="nx">getOauthUrl</span><span class="p">({</span>
         <span class="s2">"client_id"</span><span class="o">:</span>     <span class="nx">conf</span><span class="p">.</span><span class="nx">client_id</span>
       <span class="p">,</span> <span class="s2">"redirect_uri"</span><span class="o">:</span>  <span class="nx">conf</span><span class="p">.</span><span class="nx">redirect_uri</span>
@@ -81,13 +98,40 @@ More details below on the <strong>express app</strong> section</p>
     <span class="p">});</span>
 </pre></div>
 
-<h2>How requests are made</h2>
+<h2>
+<a name="extending-access-token-expiration-time" class="anchor" href="#extending-access-token-expiration-time"><span class="octicon octicon-link"></span></a>Extending access token expiration time</h2>
 
-<p>All calls are made using the <a href="https://github.com/mikeal/request">request</a>  nodejs module<br><strong>Why?</strong> something to do with wheels and re-invention.  </p>
+<p>If you want to <a href="http://developers.facebook.com/docs/facebook-login/access-tokens/#extending">extend the expiration time</a> of your short-living access token, you may use <code>extendAccessToken</code> method as it is shown below:</p>
+
+<div class="highlight highlight-js"><pre>    <span class="c1">// extending static access token</span>
+    <span class="nx">graph</span><span class="p">.</span><span class="nx">extendAccessToken</span><span class="p">({</span>
+        <span class="s2">"client_id"</span><span class="o">:</span>      <span class="nx">conf</span><span class="p">.</span><span class="nx">client_id</span>
+      <span class="p">,</span> <span class="s2">"client_secret"</span><span class="o">:</span>  <span class="nx">conf</span><span class="p">.</span><span class="nx">client_secret</span>
+    <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">facebookRes</span><span class="p">)</span> <span class="p">{</span>
+       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">facebookRes</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="c1">// extending specific access token</span>
+    <span class="nx">graph</span><span class="p">.</span><span class="nx">extendAccessToken</span><span class="p">({</span>
+        <span class="s2">"access_token"</span><span class="o">:</span>    <span class="nx">client_access_token</span>
+      <span class="p">,</span> <span class="s2">"client_id"</span><span class="o">:</span>      <span class="nx">conf</span><span class="p">.</span><span class="nx">client_id</span>
+      <span class="p">,</span> <span class="s2">"client_secret"</span><span class="o">:</span>  <span class="nx">conf</span><span class="p">.</span><span class="nx">client_secret</span>
+    <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">facebookRes</span><span class="p">)</span> <span class="p">{</span>
+       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">facebookRes</span><span class="p">);</span>
+    <span class="p">});</span>
+
+
+</pre></div>
+
+<h2>
+<a name="how-requests-are-made" class="anchor" href="#how-requests-are-made"><span class="octicon octicon-link"></span></a>How requests are made</h2>
+
+<p>All calls are made using the <a href="https://github.com/mikeal/request">request</a>  nodejs module
+<strong>Why?</strong> something to do with wheels and re-invention.</p>
 
 <p>Request options are directly mapped and can be set like so:</p>
 
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">timeout</span><span class="o">:</span>  <span class="mi">3000</span>
   <span class="p">,</span> <span class="nx">pool</span><span class="o">:</span>     <span class="p">{</span> <span class="nx">maxSockets</span><span class="o">:</span>  <span class="kc">Infinity</span> <span class="p">}</span>
   <span class="p">,</span> <span class="nx">headers</span><span class="o">:</span>  <span class="p">{</span> <span class="nx">connection</span><span class="o">:</span>  <span class="s2">"keep-alive"</span> <span class="p">}</span>
@@ -100,27 +144,46 @@ More details below on the <strong>express app</strong> section</p>
   <span class="p">});</span>
 </pre></div>
 
-<p>Possible options can be found on the <a href="https://github.com/mikeal/request">request github page</a>  </p>
+<p>Possible options can be found on the <a href="https://github.com/mikeal/request">request github page</a></p>
 
-<p><code>followRedirect</code> cannot be overriden and has a default value of <code>false</code><br><code>encoding</code> will have <code>utf-8</code> as default if nothing is set  </p>
+<p><code>followRedirect</code> cannot be overriden and has a default value of <code>false</code>
+<code>encoding</code> will have <code>utf-8</code> as default if nothing is set</p>
 
-<h2>Read data from the Graph Api</h2>
+<h3>
+<a name="pagination" class="anchor" href="#pagination"><span class="octicon octicon-link"></span></a>Pagination</h3>
 
-<div class="highlight"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"zuck"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<p>Pagination in Facebook is done either with a <code>cursor</code> or a <code>next</code> url to call.
+To simplify the fbgraph API, it's possible to use a fully constructed URL in order to get
+the next page. See the following example:</p>
+
+<div class="highlight highlight-js"><pre><span class="c1">// note: you might want to prevent the callback hell :)</span>
+<span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'likes'</span><span class="p">,</span> <span class="p">{</span><span class="nx">limit</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">access_token</span><span class="o">:</span> <span class="s2">"foobar"</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">paging</span> <span class="o">&amp;&amp;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">paging</span><span class="p">.</span><span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">paging</span><span class="p">.</span><span class="nx">next</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// page 2</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="read-data-from-the-graph-api" class="anchor" href="#read-data-from-the-graph-api"><span class="octicon octicon-link"></span></a>Read data from the Graph Api</h2>
+
+<div class="highlight highlight-js"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"zuck"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { id: '4', name: 'Mark Zuckerberg'... }</span>
 <span class="p">});</span>
 </pre></div>
 
 <p>params in the <code>url</code></p>
 
-<div class="highlight"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"zuck?fields=picture"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight highlight-js"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"zuck?fields=picture"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { picture: 'http://profile.ak.fbcdn.net/'... }</span>
 <span class="p">});</span>
 </pre></div>
 
 <p>params as an <code>object</code></p>
 
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">fields</span><span class="o">:</span> <span class="nx">picture</span> <span class="p">};</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">fields</span><span class="o">:</span> <span class="s2">"picture"</span> <span class="p">};</span>
 
 <span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"zuck"</span><span class="p">,</span> <span class="nx">params</span><span class="p">,</span>  <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { picture: "http://profile.ak.fbcdn.net/..." }</span>
@@ -130,16 +193,17 @@ More details below on the <strong>express app</strong> section</p>
 <p>GraphApi calls that <strong>redirect</strong> directly to an image
 will return a <code>json</code> response with relevant fields</p>
 
-<div class="highlight"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"/zuck/picture"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight highlight-js"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"/zuck/picture"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { image: true, location: "http://profile.ak.fb..." }</span>
 <span class="p">});</span>
 </pre></div>
 
-<h2>Search data from the Graph Api</h2>
+<h2>
+<a name="search-data-from-the-graph-api" class="anchor" href="#search-data-from-the-graph-api"><span class="octicon octicon-link"></span></a>Search data from the Graph Api</h2>
 
 <p>Search for public posts that contain <strong>brogramming</strong></p>
 
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">searchOptions</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">searchOptions</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">q</span><span class="o">:</span>     <span class="s2">"brogramming"</span>
   <span class="p">,</span> <span class="nx">type</span><span class="o">:</span>  <span class="s2">"post"</span>
 <span class="p">};</span>
@@ -149,18 +213,19 @@ will return a <code>json</code> response with relevant fields</p>
 <span class="p">});</span>
 </pre></div>
 
-<h2>Publish data to the Graph Api</h2>
+<h2>
+<a name="publish-data-to-the-graph-api" class="anchor" href="#publish-data-to-the-graph-api"><span class="octicon octicon-link"></span></a>Publish data to the Graph Api</h2>
 
 <p>All publish requests will require an <code>access token</code></p>
 
 <p>only needs to be set once</p>
 
-<div class="highlight"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">setAccessToken</span><span class="p">(</span><span class="nx">accessToken</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">setAccessToken</span><span class="p">(</span><span class="nx">accessToken</span><span class="p">);</span>
 </pre></div>
 
 <p>Post a message on a <code>friend's</code> wall</p>
 
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">wallPost</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">wallPost</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">message</span><span class="o">:</span> <span class="s2">"I'm gonna come at you like a spider monkey, chip!"</span>
 <span class="p">};</span>
 
@@ -170,32 +235,35 @@ will return a <code>json</code> response with relevant fields</p>
 <span class="p">});</span>
 </pre></div>
 
-<h2>Delete a Graph object</h2>
+<h2>
+<a name="delete-a-graph-object" class="anchor" href="#delete-a-graph-object"><span class="octicon octicon-link"></span></a>Delete a Graph object</h2>
 
-<p>To delete a graph object, provide an <code>object id</code> and the 
+<p>To delete a graph object, provide an <code>object id</code> and the
 response will return <code>{data: true}</code> or <code>{data:false}</code></p>
 
-<div class="highlight"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">del</span><span class="p">(</span><span class="nx">postID</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight highlight-js"><pre><span class="nx">graph</span><span class="p">.</span><span class="nx">del</span><span class="p">(</span><span class="nx">postID</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// {data:true}/{data:false}</span>
 <span class="p">});</span>
 </pre></div>
 
-<h2>Performing a FQL query</h2>
+<h2>
+<a name="performing-a-fql-query" class="anchor" href="#performing-a-fql-query"><span class="octicon octicon-link"></span></a>Performing a FQL query</h2>
 
 <p>A single FQL query is done by sending a query as a string</p>
 
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="s2">"SELECT name FROM user WHERE uid = me()"</span><span class="p">;</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="s2">"SELECT name FROM user WHERE uid = me()"</span><span class="p">;</span>
 
 <span class="nx">graph</span><span class="p">.</span><span class="nx">fql</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// { data: [ { name: 'Ricky Bobby' } ] }</span>
 <span class="p">});</span>
 </pre></div>
 
-<h2>Performing a FQL Multi-Query</h2>
+<h2>
+<a name="performing-a-fql-multi-query" class="anchor" href="#performing-a-fql-multi-query"><span class="octicon octicon-link"></span></a>Performing a FQL Multi-Query</h2>
 
 <p>FQL Multi-Queries are done by sending in an object containing the separate queries</p>
 
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">name</span><span class="o">:</span>         <span class="s2">"SELECT name FROM user WHERE uid = me()"</span>
   <span class="p">,</span> <span class="nx">permissions</span><span class="o">:</span>  <span class="s2">"SELECT email, user_about_me, user_birthday FROM permissions WHERE uid = me()"</span>
 <span class="p">};</span>
@@ -209,13 +277,14 @@ response will return <code>{data: true}</code> or <code>{data:false}</code></p>
 <span class="p">});</span>
 </pre></div>
 
-<h2>Rockin' it on an Express App</h2>
+<h2>
+<a name="rockin-it-on-an-express-app" class="anchor" href="#rockin-it-on-an-express-app"><span class="octicon octicon-link"></span></a>Rockin' it on an Express App</h2>
 
-<p>This example assumes that you have a link on the main page <code>/</code> that points to <code>/auth/facebook</code>.<br>
-The user will click this link and get into the facebook authorization flow ( if the user hasn't already connected)<br>
-After <code>authorizing</code> the app the user will be redirected to <code>/UserHasLoggedIn</code>  </p>
+<p>This example assumes that you have a link on the main page <code>/</code> that points to <code>/auth/facebook</code>.
+The user will click this link and get into the facebook authorization flow ( if the user hasn't already connected)
+After <code>authorizing</code> the app the user will be redirected to <code>/UserHasLoggedIn</code></p>
 
-<div class="highlight"><pre><span class="cm">/**</span>
+<div class="highlight highlight-js"><pre><span class="cm">/**</span>
 <span class="cm"> * Module dependencies.</span>
 <span class="cm"> */</span>
 
@@ -243,7 +312,7 @@ After <code>authorizing</code> the app the user will be redirected to <code>/Use
 <span class="p">});</span>
 
 <span class="nx">app</span><span class="p">.</span><span class="nx">configure</span><span class="p">(</span><span class="s1">'development'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
-  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">errorHandler</span><span class="p">({</span> <span class="nx">dumpExceptions</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">showStack</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}));</span> 
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">errorHandler</span><span class="p">({</span> <span class="nx">dumpExceptions</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">showStack</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}));</span>
 <span class="p">});</span>
 
 <span class="nx">app</span><span class="p">.</span><span class="nx">configure</span><span class="p">(</span><span class="s1">'production'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
@@ -264,6 +333,7 @@ After <code>authorizing</code> the app the user will be redirected to <code>/Use
     <span class="kd">var</span> <span class="nx">authUrl</span> <span class="o">=</span> <span class="nx">graph</span><span class="p">.</span><span class="nx">getOauthUrl</span><span class="p">({</span>
         <span class="s2">"client_id"</span><span class="o">:</span>     <span class="nx">conf</span><span class="p">.</span><span class="nx">client_id</span>
       <span class="p">,</span> <span class="s2">"redirect_uri"</span><span class="o">:</span>  <span class="nx">conf</span><span class="p">.</span><span class="nx">redirect_uri</span>
+      <span class="p">,</span> <span class="s2">"scope"</span><span class="o">:</span>         <span class="nx">conf</span><span class="p">.</span><span class="nx">scope</span>
     <span class="p">});</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//checks whether a user denied the app facebook login/permissions</span>
@@ -282,7 +352,7 @@ After <code>authorizing</code> the app the user will be redirected to <code>/Use
     <span class="p">,</span> <span class="s2">"client_secret"</span><span class="o">:</span>  <span class="nx">conf</span><span class="p">.</span><span class="nx">client_secret</span>
     <span class="p">,</span> <span class="s2">"code"</span><span class="o">:</span>           <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">code</span>
   <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">facebookRes</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">'/loggedIn'</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">'/UserHasLoggedIn'</span><span class="p">);</span>
   <span class="p">});</span>
 
 
@@ -302,9 +372,10 @@ After <code>authorizing</code> the app the user will be redirected to <code>/Use
 
 </pre></div>
 
-<h2>Running tests</h2>
+<h2>
+<a name="running-tests" class="anchor" href="#running-tests"><span class="octicon octicon-link"></span></a>Running tests</h2>
 
-<p>Before running the test suite, add your Facebook <code>appId</code> and <code>appSecret</code> to <code>tests/config.js</code><br>
+<p>Before running the test suite, add your Facebook <code>appId</code> and <code>appSecret</code> to <code>tests/config.js</code>
  This is needed to create <code>test users</code> and to get a test <code>access_token</code></p>
 
 <pre><code>$ npm install
@@ -313,7 +384,8 @@ $ make test
 
 <p><em>Tests might fail if the Facebook api has an issue.</em></p>
 
-<h2>License</h2>
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>(The MIT License)</p>
 
@@ -351,7 +423,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 
           <p class="repo-owner"><a href="https://github.com/criso/fbgraph"></a> is maintained by <a href="https://github.com/criso">criso</a>.</p>
 
-          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
         </aside>
       </div>
     </div>

@@ -23,9 +23,22 @@ If you get an accesstoken via some other Oauth module like [everyauth](https://g
 [connect-auth](https://github.com/ciaranj/connect-auth) or [node-oauth](https://github.com/ciaranj/node-oauth) you can just set
 the access token directly. Most `get` calls, and pretty much all `post` calls will require an `access_token`
 
+
+### Static access token (used on all calls)
 ```js
     graph.setAccessToken(access_token);
 ```
+
+### To use a specific access token for a particular request
+```js
+    // pass it in as part of the url 
+    graph.post(userId + "/feed?access_token=007", wallPost, function(err, res) {
+        // returns the post id
+        console.log(res); // { id: xxxxx}
+    });
+
+```
+
 
 This is how you would get authenticated using only the `fbgraph` module.
 More details below on the __express app__ section
@@ -57,13 +70,24 @@ More details below on the __express app__ section
 If you want to [extend the expiration time](http://developers.facebook.com/docs/facebook-login/access-tokens/#extending) of your short-living access token, you may use `extendAccessToken` method as it is shown below:
 
 ```js
-    // extending access token
+    // extending static access token
     graph.extendAccessToken({
         "client_id":      conf.client_id
       , "client_secret":  conf.client_secret
     }, function (err, facebookRes) {
        console.log(facebookRes);
     });
+
+    // extending specific access token
+    graph.extendAccessToken({
+        "accessToken":    client_access_token
+      , "client_id":      conf.client_id
+      , "client_secret":  conf.client_secret
+    }, function (err, facebookRes) {
+       console.log(facebookRes);
+    });
+
+
 ```
 
 
@@ -166,6 +190,8 @@ only needs to be set once
 ```js
 graph.setAccessToken(accessToken);
 ```
+
+
 
 Post a message on a `friend's` wall
 

@@ -65,6 +65,14 @@ More details below on the __express app__ section
     });
 ```
 
+### Securing API calls
+
+Facebook [recommends](https://developers.facebook.com/docs/reference/api/securing-graph-api/) adding the
+`appsecret_proof` parameter to all API calls to verify that the access tokens are coming from a valid app.
+You can make this happen automatically by calling `graph.setAppSecret(app_secret)`, which will be used on
+all calls to generate the `appsecret_proof` hash that is sent to Facebook.  Make sure you also set the 
+access token for the user via `graph.setAccessToken`.
+
 ## Extending access token expiration time
 
 If you want to [extend the expiration time](http://developers.facebook.com/docs/facebook-login/access-tokens/#extending) of your short-living access token, you may use `extendAccessToken` method as it is shown below:

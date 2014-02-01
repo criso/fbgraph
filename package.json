@@ -17,7 +17,7 @@
     "qs": "0.5.x"
   },
   "devDependencies": {
-    "vows": "0.6.x"
+    "vows": "0.7.x"
   },
   "repository": {
     "type": "git",

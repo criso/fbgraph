@@ -29,9 +29,14 @@ the access token directly. Most `get` calls, and pretty much all `post` calls wi
     graph.setAccessToken(access_token);
 ```
 
+### Context that callbacks will be called in
+```js
+    graph.setContext(access_token);
+```
+
 ### To use a specific access token for a particular request
 ```js
-    // pass it in as part of the url 
+    // pass it in as part of the url
     graph.post(userId + "/feed?access_token=007", wallPost, function(err, res) {
         // returns the post id
         console.log(res); // { id: xxxxx}
@@ -70,7 +75,7 @@ More details below on the __express app__ section
 Facebook [recommends](https://developers.facebook.com/docs/reference/api/securing-graph-api/) adding the
 `appsecret_proof` parameter to all API calls to verify that the access tokens are coming from a valid app.
 You can make this happen automatically by calling `graph.setAppSecret(app_secret)`, which will be used on
-all calls to generate the `appsecret_proof` hash that is sent to Facebook.  Make sure you also set the 
+all calls to generate the `appsecret_proof` hash that is sent to Facebook.  Make sure you also set the
 access token for the user via `graph.setAccessToken`.
 
 ## Extending access token expiration time

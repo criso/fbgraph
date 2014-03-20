@@ -31,7 +31,7 @@ the access token directly. Most `get` calls, and pretty much all `post` calls wi
 
 ### To use a specific access token for a particular request
 ```js
-    // pass it in as part of the url 
+    // pass it in as part of the url
     graph.post(userId + "/feed?access_token=007", wallPost, function(err, res) {
         // returns the post id
         console.log(res); // { id: xxxxx}
@@ -70,7 +70,7 @@ More details below on the __express app__ section
 Facebook [recommends](https://developers.facebook.com/docs/reference/api/securing-graph-api/) adding the
 `appsecret_proof` parameter to all API calls to verify that the access tokens are coming from a valid app.
 You can make this happen automatically by calling `graph.setAppSecret(app_secret)`, which will be used on
-all calls to generate the `appsecret_proof` hash that is sent to Facebook.  Make sure you also set the 
+all calls to generate the `appsecret_proof` hash that is sent to Facebook.  Make sure you also set the
 access token for the user via `graph.setAccessToken`.
 
 ## Extending access token expiration time
@@ -237,6 +237,16 @@ graph.fql(query, function(err, res) {
 });
 ```
 
+You can specify additional options by adding a JSON object
+```js
+var query = "SELECT name FROM user WHERE uid = me()";
+var options = {access_token: "foobar"};
+
+graph.fql(query, options, function(err, res) {
+  console.log(res); // { data: [ { name: 'Ricky Bobby' } ] }
+});
+```
+
 ## Performing a FQL Multi-Query
 
 FQL Multi-Queries are done by sending in an object containing the separate queries
@@ -385,4 +395,3 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-

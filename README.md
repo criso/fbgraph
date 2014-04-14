@@ -2,7 +2,6 @@
 
 [FBgraph](http://criso.github.com/fbgraph/) is a nodejs module that provides easy access to the facebook graph api
 
-
 ## Oh nooooooesss - MOAR facebook
 
   I created this because I wanted to access FB's graph from `node`.

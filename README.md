@@ -200,14 +200,14 @@ graph.setAccessToken(accessToken);
 
 
 
-Post a message on a `friend's` wall
+Post a message on the user's wall
 
 ```js
 var wallPost = {
   message: "I'm gonna come at you like a spider monkey, chip!"
 };
 
-graph.post(userId + "/feed", wallPost, function(err, res) {
+graph.post("/feed", wallPost, function(err, res) {
   // returns the post id
   console.log(res); // { id: xxxxx}
 });

@@ -1,6 +1,8 @@
-# Stay Classy, Facebook 0.2.11
+# Stay Classy, Facebook
 
 [FBgraph](http://criso.github.com/fbgraph/) is a nodejs module that provides easy access to the facebook graph api
+
+### Version: 0.2.11
 
 ## Oh nooooooesss - MOAR facebook
 

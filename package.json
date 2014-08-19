@@ -13,8 +13,8 @@
   },
   "main": "index",
   "dependencies": {
-    "request": "2.11.x",
-    "qs": "0.5.x"
+    "request": "2.40.x",
+    "qs": "1.2.x"
   },
   "devDependencies": {
     "vows": "0.7.x"

@@ -226,6 +226,41 @@ graph.del(postID, function(err, res) {
 });
 ```
 
+## Performing a batch request
+
+[Batching](https://developers.facebook.com/docs/graph-api/making-multiple-requests) allows you to pass instructions for several operations in a single HTTP request.
+
+```js
+graph.batch([
+  {
+    method: "GET",
+    relative_url: "me" // Get the current user's profile information
+  },
+  {
+    method: "GET",
+    relative_url: "me/friends?limit=50" // Get the first 50 friends of the current user
+  }
+], function(err, res) {
+  console.log(res);
+  // [
+  //   {
+  //     "code": 200, 
+  //     "headers":[
+  //       {"name": "Content-Type", "value": "text/javascript; charset=UTF-8"}
+  //     ],
+  //     "body": "{\"id\":\"…\"}"
+  //   },
+  //   {
+  //     "code": 200,
+  //     "headers":[
+  //       {"name": "Content-Type", "value": "text/javascript; charset=UTF-8"}
+  //     ],
+  //     "body":"{\"data\": [{…}]}"
+  //   }
+  // ]
+});
+```
+
 ## Performing a FQL query
 
 A single FQL query is done by sending a query as a string

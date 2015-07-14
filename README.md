@@ -125,6 +125,20 @@ Possible options can be found on the [request github page](https://github.com/mi
 `followRedirect` cannot be overriden and has a default value of `false`
 `encoding` will have `utf-8` as default if nothing is set
 
+### Request Object
+The request object is exposed as a property on graph object. So that all the [request](https://github.com/mikeal/request) api can be accessed.
+
+```js
+var graphObject = graph
+  .get("zuck", function(err, res) {
+    console.log(res); // { id: '4', name: 'Mark Zuckerberg'... }
+  });
+
+// abort the request.
+graphObject.request.abort();
+
+```
+
 ### Pagination
 Pagination in Facebook is done either with a `cursor` or a `next` url to call.
 To simplify the fbgraph API, it's possible to use a fully constructed URL in order to get

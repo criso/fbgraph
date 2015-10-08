@@ -155,6 +155,12 @@ graph.get('likes', {limit: 2, access_token: "foobar"}, function(err, res) {
 });
 ```
 
+## Setting the version of the Graph Api
+
+```js
+graph.setVersion("2.4");
+```
+
 ## Read data from the Graph Api
 
 ```js

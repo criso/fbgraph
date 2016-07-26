@@ -5,7 +5,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/fbgraph.svg?style=flat-square)](https://www.npmjs.com/package/fbgraph)
 
 
-### Version: 1.1.0
+### Version: 1.3.0
 
 ## Oh nooooooesss - MOAR facebook
 

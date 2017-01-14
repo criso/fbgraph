@@ -161,8 +161,10 @@ graph.get('likes', {limit: 2, access_token: "foobar"}, function(err, res) {
 ## Setting the version of the Graph Api
 
 ```js
-graph.setVersion("2.4");
+graph.setVersion("2.8");
 ```
+
+See [Facebook API changelog](https://developers.facebook.com/docs/apps/changelog) for available versions.
 
 ## Read data from the Graph Api
 

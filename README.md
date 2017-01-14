@@ -331,6 +331,10 @@ This example assumes that you have a link on the main page `/` that points to `/
 The user will click this link and get into the facebook authorization flow ( if the user hasn't already connected)
 After `authorizing` the app the user will be redirected to `/UserHasLoggedIn`
 
+```
+npm install --save express fbgraph method-override body-parser errorhandler pug
+```
+
 ```js
 /**
  * Module dependencies.

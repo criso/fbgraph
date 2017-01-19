@@ -5,8 +5,6 @@
 [![npm downloads](https://img.shields.io/npm/dm/fbgraph.svg?style=flat-square)](https://www.npmjs.com/package/fbgraph)
 
 
-### Version: 1.3.0
-
 ## Oh nooooooesss - MOAR facebook
 
   I created this because I wanted to access FB's graph from `node`.

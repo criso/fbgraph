@@ -14,7 +14,7 @@
   },
   "main": "index",
   "dependencies": {
-    "qs": "^1.2.2",
+    "qs": "^6.5.0",
     "request": "^2.79.0"
   },
   "devDependencies": {

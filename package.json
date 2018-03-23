@@ -1,6 +1,6 @@
 {
   "name": "fbgraph",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Facebook Graph API client",
   "license": "MIT",
   "keywords": [

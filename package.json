@@ -1,6 +1,6 @@
 {
   "name": "fbgraph",
-  "version": "1.4.2",
+  "version": "1.4.4",
   "description": "Facebook Graph API client",
   "license": "MIT",
   "keywords": [
@@ -14,7 +14,7 @@
   },
   "main": "index",
   "dependencies": {
-    "qs": "^1.2.2",
+    "qs": "^6.5.0",
     "request": "^2.79.0"
   },
   "devDependencies": {
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mgara/fbgraph.git"
+    "url": "git://github.com/criso/fbgraph.git"
   },
   "engines": {
     "node": ">= 0.4.1"
